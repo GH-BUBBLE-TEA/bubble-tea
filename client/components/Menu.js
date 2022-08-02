@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { getBubbleTeas } from "../store/bubbleTeas";
 
 class Menu extends React.Component {
   componentDidMount() {
@@ -11,15 +12,15 @@ class Menu extends React.Component {
     return (
       <div>
         <h1>MENU</h1>;
-        {drinks.map((drink) => {
-          <div key={drink.id}>
+        {bubbleTeas.map((bubbleTea) => {
+          <div key={bubbleTea.id}>
             return (
             <div>
-              <Link to={`/drinks/${drink.id}`}>
-                <img src={drink.image} />
-                <h3>{drink.name}</h3>
+              <Link to={`/bubbleteas/${bubbleTea.id}`}>
+                <img src={bubbleTea.imageUrl} />
+                <h3>{bubbleTea.teaName}</h3>
               </Link>
-              <p>Base Price: {drink.price}</p>
+              <p>Base Price: {bubbleTea.defaultPrice}</p>
             </div>
             )
           </div>;
@@ -29,12 +30,12 @@ class Menu extends React.Component {
   }
 }
 
-const mapStateToProps = ({ drinks }) => ({
-  drinks,
+const mapStateToProps = ({ bubbleTeas }) => ({
+  bubbleTeas,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchData: () => dispatch(fetchData()),
+  fetchData: () => dispatch(getBubbleTeas()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);
