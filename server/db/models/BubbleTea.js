@@ -32,6 +32,57 @@ const BubbleTea = db.define("bubbleTea", {
       min: 0,
     },
   },
+  sugarLevel: {
+    status: {
+      type: Sequelize.ENUM(
+        "No Sugar",
+        "25% Sugar",
+        "50% Sugar",
+        "75% Sugar",
+        "100% Sugar"
+      ),
+    },
+    defaultValue: "100% Sugar",
+  },
+  size: {
+    status: {
+      type: Sequelize.ENUM("M", "L"),
+      defaultValue: "M",
+    },
+  },
+  iceOrHot: {
+    status: {
+      type: Sequelize.ENUM(
+        "No Ice",
+        "Less Ice",
+        "Regular Ice",
+        "Hot",
+        "More Ice"
+      ),
+    },
+    defaultValue: "Regular Ice",
+  },
+  alcohol: {
+    status: {
+      type: Sequelize.ENUM("Vodka", "Rum", "Gin", "Tequila", "Whiskey", "None"),
+    },
+    defaultValue: "None",
+  },
+  toppings: {
+    status: {
+      type: Sequelize.ENUM(
+        "Tapioca",
+        "Pudding",
+        "Grass Jelly",
+        "Coconut Jelly",
+        "Lychee Jelly",
+        "Red Bean",
+        "Aloe Vera",
+        "None"
+      ),
+    },
+    defaultValue: "None",
+  },
 });
 
 module.exports = BubbleTea;
