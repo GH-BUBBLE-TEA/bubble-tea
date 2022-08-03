@@ -19,7 +19,7 @@ async function seed() {
     User.create({ username: "murphy", password: "123" }),
   ]);
 
-  const bubbleteas = await Promise.all([
+  const bubbleTeas = await Promise.all([
     BubbleTea.create({
       teaName: "wei tea",
       defaultPrice: "100",
@@ -39,9 +39,9 @@ async function seed() {
       cody: users[0],
       murphy: users[1],
     },
-    bubbleteas: {
-      teaName: bubbleteas[0],
-      teaName: bubbleteas[1],
+    bubbleTeas: {
+      teaName: bubbleTeas[0],
+      teaName: bubbleTeas[1],
     },
   };
 }

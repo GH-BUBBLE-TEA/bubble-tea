@@ -2,16 +2,18 @@ import axios from "axios";
 
 const GOT_BUBBLETEAS = "GOT_BUBBLETEAS";
 
-const gotBubbleTeas = (bubbleTeas) => ({
-  type: GOT_BUBBLETEAS,
-  bubbleTeas,
-});
+export const gotBubbleTeas = (bubbleTeas) => {
+  return {
+    type: GOT_BUBBLETEAS,
+    bubbleTeas,
+  };
+};
 
 export const getBubbleTeas = () => {
   return async (dispatch) => {
     try {
-      const { data: bubbleTeas } = await axios.get("/api/bubbleTeas");
-      dispatch(gotBubbleTeas(bubbleTeas));
+      const { data } = await axios.get("/api/bubbleTeas");
+      dispatch(gotBubbleTeas(data));
     } catch (err) {
       console.log(err);
     }
