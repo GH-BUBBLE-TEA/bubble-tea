@@ -13,11 +13,8 @@ const Order = require("./models/Order");
 User.hasMany(Order);
 Order.belongsTo(User);
 
-LineItems.hasOne(BubbleTea);
-BubbleTea.belongsTo(LineItems);
-
-Order.hasMany(LineItems);
-LineItems.belongsTo(Order);
+Order.belongsToMany(BubbleTea, { through: LineItems });
+BubbleTea.belongsToMany(Order, { through: LineItems });
 
 module.exports = {
   db,
