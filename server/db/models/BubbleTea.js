@@ -33,6 +33,7 @@ const BubbleTea = db.define("bubbleTea", {
     },
   },
   sugarLevel: {
+    type: Sequelize.STRING,
     status: {
       type: Sequelize.ENUM(
         "No Sugar",
@@ -45,12 +46,14 @@ const BubbleTea = db.define("bubbleTea", {
     defaultValue: "100% Sugar",
   },
   size: {
+    type: Sequelize.STRING,
     status: {
       type: Sequelize.ENUM("M", "L"),
       defaultValue: "M",
     },
   },
   iceOrHot: {
+    type: Sequelize.STRING,
     status: {
       type: Sequelize.ENUM(
         "No Ice",
@@ -63,12 +66,14 @@ const BubbleTea = db.define("bubbleTea", {
     defaultValue: "Regular Ice",
   },
   alcohol: {
+    type: Sequelize.STRING,
     status: {
       type: Sequelize.ENUM("Vodka", "Rum", "Gin", "Tequila", "Whiskey", "None"),
     },
     defaultValue: "None",
   },
   toppings: {
+    type: Sequelize.STRING,
     status: {
       type: Sequelize.ENUM(
         "Tapioca",
