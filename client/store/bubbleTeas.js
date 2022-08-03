@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const GOT_BUBBLETEAS = "GOT_BUBBLETEAS";
+//const GOT_SINGLEBUBBLETEA = "GOT_SINGLEBUBBLETEA";
 
-export const gotBubbleTeas = (bubbleTeas) => {
+const gotBubbleTeas = (bubbleTeas) => {
   return {
     type: GOT_BUBBLETEAS,
     bubbleTeas,

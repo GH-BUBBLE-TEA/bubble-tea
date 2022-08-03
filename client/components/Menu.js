@@ -9,12 +9,6 @@ export class Menu extends React.Component {
   }
 
   render() {
-    console.log(this.props.bubbleTeas);
-    console.log(
-      this.props.bubbleTeas.map((bubbleTea) => {
-        bubbleTea.imageURL, bubbleTea.teaName, bubbleTea.defaultPrice;
-      })
-    );
     return (
       <div>
         <h1>MENU</h1>
@@ -22,7 +16,7 @@ export class Menu extends React.Component {
           {this.props.bubbleTeas.map((bubbleTea) => (
             <div key={bubbleTea.id}>
               <div>
-                <Link to={`/bubbleTeas/${bubbleTea.id}`}>
+                <Link to={`/menu/${bubbleTea.id}`}>
                   <img src={bubbleTea.imageURL} />
                   <h3>{bubbleTea.teaName}</h3>
                 </Link>
