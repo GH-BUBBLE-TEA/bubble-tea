@@ -21,14 +21,25 @@ async function seed() {
 
   const bubbleTeas = await Promise.all([
     BubbleTea.create({
-      teaName: "wei tea",
-      defaultPrice: "100",
-      teaCategories: "milk tea",
+      teaName: "Signature Alcohol Bubble Tea",
+      defaultPrice: "15",
+      teaCategories: "Milk Tea",
+      stock: 2,
+      description: "This is our signature bubble tea with rum!",
     }),
     BubbleTea.create({
-      teaName: "jess tea",
-      defaultPrice: "30",
-      teaCategories: "fruit tea",
+      teaName: "Mango Vodka Green Tea",
+      defaultPrice: "20",
+      teaCategories: "Fruit Tea",
+      stock: 3,
+      description: "This is our signature fruit tea with Vodka!",
+    }),
+    BubbleTea.create({
+      teaName: "Macha latte",
+      defaultPrice: "10",
+      teaCategories: "Latte",
+      stock: 4,
+      description: "This is our signature latte",
     }),
   ]);
 
