@@ -1,15 +1,14 @@
 import React from "react";
-import Menu from "./components/Menu";
+//import Menu from "./components/Menu";
 import Routes from "./Routes";
-
-// import Navbar from "./components/Navbar";
-// import Routes from "./Routes";
+//import Cart from "./components/Cart";
+import Navbar from "./components/Navbar";
 
 const App = () => {
   return (
     <div>
-      {/* <Navbar /> */}
-      {/* <Routes /> */}
+      <Navbar />
+      {/* <Menu /> */}
       <Routes />
     </div>
   );

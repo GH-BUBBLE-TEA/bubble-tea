@@ -10,8 +10,10 @@ export class Menu extends React.Component {
       teaFilter: "All",
     };
     this.handleChange = this.handleChange.bind(this);
+    console.log("menu props:", this.props);
   }
   componentDidMount() {
+    console.log("component");
     this.props.fetchData();
   }
 
@@ -20,9 +22,7 @@ export class Menu extends React.Component {
   }
 
   render() {
-    const allbubbleTeas = this.props.bubbleTeas;
-    console.log(this.props);
-    allbubbleTeas.filter((singleBubbleTea) => {
+    const allbubbleTeas = this.props.bubbleTeas.filter((singleBubbleTea) => {
       if (this.state.teaFilter === "Milk Tea") {
         return singleBubbleTea.teaCategories === "Milk Tea";
       } else if (this.state.teaFilter === "Fruit Tea") {
@@ -35,7 +35,6 @@ export class Menu extends React.Component {
     });
     return (
       <div>
-        <h1>MENU</h1>
         <Link to="/cart">Cart </Link>
         <div>
           <select
