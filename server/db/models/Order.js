@@ -2,7 +2,6 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 
 const Order = db.define("order", {
-  type: Sequelize.STRING,
   status: {
     type: Sequelize.ENUM(
       "Pending",
@@ -11,6 +10,7 @@ const Order = db.define("order", {
       "Shipped",
       "Completed"
     ),
+    defaultValue: "Pending",
   },
 });
 

@@ -2,10 +2,9 @@ import axios from "axios";
 import React from "react";
 import { connect } from "react-redux";
 //import { Link } from "react-router-dom";
-import {
-  getSingleBubbleTea,
-  sendBubbleTeaToCart,
-} from "../store/singleBubbleTea";
+import { getSingleBubbleTea } from "../store/singleBubbleTea";
+
+import { addToCart } from "../store/lineItems";
 
 export class SinglePage extends React.Component {
   componentDidMount() {
@@ -17,16 +16,11 @@ export class SinglePage extends React.Component {
     return (
       <div>
         <main>
-          <h1>A BUBBLE TEA</h1>
+          <h1>{bubbleTea.teaName}</h1>
           <img src={bubbleTea.imageURL} />
-          <h1>{bubbleTea.name}</h1>
           <h3>${bubbleTea.defaultPrice}</h3>
           <h4>{bubbleTea.description}</h4>
-          <button
-            onClick={() =>
-              this.props.sendBubbleTeaToCart(this.props.match.params.id)
-            }
-          >
+          <button onClick={() => this.props.addToCart(bubbleTea)}>
             Add to Cart
           </button>
         </main>
@@ -41,7 +35,7 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   getSingleBubbleTea: (id) => dispatch(getSingleBubbleTea(id)),
-  sendBubbleTeaToCart: (id) => dispatch(sendBubbleTeaToCart(id)),
+  addToCart: (bubbleTea) => dispatch(addToCart(bubbleTea)),
 });
 
 export default connect(mapState, mapDispatch)(SinglePage);
