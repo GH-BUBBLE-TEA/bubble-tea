@@ -5,11 +5,13 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import auth from "./auth";
 import bubbleTeasReducer from "./bubbleTeas";
 import bubbleTeaReducer from "./singleBubbleTea";
+import cartReducer from "./lineItems";
 
 const reducer = combineReducers({
   auth,
   bubbleTeas: bubbleTeasReducer,
-  singleBubbleTea: bubbleTeaReducer
+  singleBubbleTea: bubbleTeaReducer,
+  cart: cartReducer,
 });
 
 const middleware = composeWithDevTools(
