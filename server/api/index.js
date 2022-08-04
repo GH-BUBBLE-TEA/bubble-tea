@@ -5,6 +5,8 @@ router.use("/users", require("./users"));
 
 router.use("/bubbleTeas", require("./bubbleTeas"));
 
+router.use("/lineItems", require("./lineItems"));
+
 router.use((req, res, next) => {
   const error = new Error("Not Found");
   error.status = 404;
