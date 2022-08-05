@@ -35,7 +35,6 @@ export class Menu extends React.Component {
     });
     return (
       <div>
-        <Link to="/cart">Cart </Link>
         <div>
           <select
             id="category"
