@@ -17,7 +17,7 @@ const BubbleTea = db.define("bubbleTea", {
   imageURL: {
     type: Sequelize.TEXT,
     defaultValue:
-      "https://d3q0fpse3wbo5h.cloudfront.net/production/uploads/innovations/kung_fu_bubble_tea.jpg",
+      "https://cdn.pixabay.com/photo/2021/02/11/19/03/bubble-tea-6006193__340.png",
   },
   defaultPrice: {
     type: Sequelize.DECIMAL,

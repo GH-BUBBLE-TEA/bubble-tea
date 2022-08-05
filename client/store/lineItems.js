@@ -17,16 +17,21 @@ const addedToCart = (item) => {
   };
 };
 
-// export const getCartInfo = () => {
-//   return async (dispatch) => {
-//     try {
-//       const { data } = await axios.get("/api/lineItems");
-//       dispatch(gotCartInfo(data));
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
-// };
+export const getCartInfo = () => {
+  return async (dispatch) => {
+    try {
+      const token = window.localStorage.getItem("token");
+      const { data } = await axios.get("/api/lineItems", {
+        headers: {
+          authorization: token,
+        },
+      });
+      dispatch(gotCartInfo(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
 
 export const addToCart = (bubbleTea) => {
   return async (dispatch) => {
