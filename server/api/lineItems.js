@@ -6,9 +6,26 @@ module.exports = router;
 
 router.get("/", async (req, res, next) => {
   try {
-    const lineItems = await LineItems.findAll();
-    //status pending, user id
-    res.json(lineItems);
+    const user = await User.findByToken(req.headers.authorization);
+    console.log("user: ", user);
+    const order = await Order.findOne({
+      where: {
+        userId: user.id,
+        status: "Pending",
+      },
+    });
+    if (!order) {
+      res.send("there is no item in the cart");
+    } else {
+      console.log("orderId: ", order.id);
+      const lineItems = await LineItems.findAll({
+        where: {
+          orderId: order.id,
+        },
+      });
+      console.log("cart:", lineItems);
+      res.status(200).send(lineItems);
+    }
   } catch (err) {
     next(err);
   }
