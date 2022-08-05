@@ -15,10 +15,6 @@ router.get("/", async (req, res, next) => {
 });
 router.post("/", async (req, res, next) => {
   console.log("req.body: ", req.body);
-  // req.body.bubbleTea = {
-  //   id: 1,
-  //   defaultPrice: "15",
-  // };
   try {
     const bubbleTea = req.body;
     const user = await User.findByToken(req.headers.authorization);
