@@ -4,13 +4,16 @@ const {
   db,
   models: { User, BubbleTea },
 } = require("../server/db");
-
+const dummyData = require("./dummydata");
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
  */
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
+
+  //add dummy data
+  
   console.log("db synced!");
 
   // Creating Users
@@ -18,7 +21,7 @@ async function seed() {
     User.create({ username: "cody", password: "123" }),
     User.create({ username: "murphy", password: "123" }),
   ]);
-
+/*
   const bubbleTeas = await Promise.all([
     BubbleTea.create({
       teaName: "Signature Alcohol Bubble Tea",
@@ -42,6 +45,7 @@ async function seed() {
       description: "This is our signature latte",
     }),
   ]);
+  */
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
@@ -50,11 +54,10 @@ async function seed() {
       cody: users[0],
       murphy: users[1],
     },
-    bubbleTeas: {
-      teaName: bubbleTeas[0],
-      teaName: bubbleTeas[1],
-    },
-  };
+    bubbleTeas: await Promise.all(dummyData.map(tea => {
+         return BubbleTea.create(tea);
+    }))
+  }
 }
 
 /*
