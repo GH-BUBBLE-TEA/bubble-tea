@@ -9,6 +9,7 @@ import SinglePage from "./components/SinglePage";
 import Cart from "./components/Cart";
 import CreateBubbleTea from "./components/CreateBubbleTea";
 import EditBubbleTea from "./components/EditBubbleTea";
+import EditUser from "./components/EditUser";
 
 /**
  * COMPONENT
@@ -25,8 +26,9 @@ class Routes extends Component {
         {isLoggedIn ? (
           <div>
             <Switch>
-              <Route path="/home" component={Home} />
+              <Route exact path="/home" component={Home} />
               {/* <Redirect to="/home" /> */}
+              <Route exact path="/home/edit/:id" component={EditUser} />
               <Route exact path="/menu" component={Menu} />
               {isAdmin ? (
                 <Route exact path="/menu/create" component={CreateBubbleTea} />

@@ -1,13 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getUsers, deleteUser, updateAdminStatus } from "../store/users";
-
+import { Link } from "react-router-dom";
+import { getSingleUser } from "../store/singleUser";
 /**
  * COMPONENT
  */
 export class Home extends React.Component {
   componentDidMount() {
     this.props.getUsers();
+    this.props.getSingleUser(this.props.id);
   }
 
   updateStatus(user, adminStatusValue) {
@@ -19,53 +21,64 @@ export class Home extends React.Component {
 
     return (
       <div>
-        <h3>Welcome, {username}</h3>
+        <h3>Welcome, {this.props.user.username}</h3>
         <div>
           {isAdmin ? (
-            <div>
-              {" "}
-              Users:
-              <table>
-                <thead>
-                  <tr>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Admin User</th>
-                    <th>Option</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {users.map((user) => {
-                    return (
-                      <tr key={user.id}>
-                        <td>{user.username}</td>
-                        <td>{user.email}</td>
-                        <td>
-                          {user.isAdmin ? "TRUE" : "FALSE"}
-                          <button
-                            onClick={() =>
-                              this.updateStatus(user, user.isAdmin)
-                            }
-                          >
-                            Change Status
-                          </button>
-                        </td>
+            <React.Fragment>
+              <div>
+                {" "}
+                Users:
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Username</th>
+                      <th>Email</th>
+                      <th>Admin User</th>
+                      <th>Option</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users.map((user) => {
+                      return (
+                        <tr key={user.id}>
+                          <td>{user.username}</td>
+                          <td>{user.email}</td>
+                          <td>
+                            {user.isAdmin ? "TRUE" : "FALSE"}
+                            <button
+                              onClick={() =>
+                                this.updateStatus(user, user.isAdmin)
+                              }
+                            >
+                              Change Status
+                            </button>
+                          </td>
 
-                        <td>
-                          <button
-                            onClick={() => this.props.deleteUser(user.id)}
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+                          <td>
+                            <button
+                              onClick={() => this.props.deleteUser(user.id)}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+              <div>Order Lists:</div>
+            </React.Fragment>
           ) : (
-            <h4>order history</h4>
+            <React.Fragment>
+              <h2>Profile:</h2>
+              <h3>Username: {this.props.user.username}</h3>
+              <h3>Email: {this.props.user.email}</h3>
+              <Link to={`/home/edit/${this.props.user.id}`}>
+                <button>Edit</button>
+              </Link>
+              <h2>Orders</h2>
+            </React.Fragment>
           )}
         </div>
       </div>
@@ -80,12 +93,16 @@ const mapStateToProps = (state) => {
   return {
     username: state.auth.username,
     isAdmin: !!state.auth.isAdmin,
+    // email: state.auth.email,
+    id: state.auth.id,
     users: state.users,
+    user: state.user,
   };
 };
 
 const mapDispatchToProps = (dispatch, { history }) => ({
   getUsers: () => dispatch(getUsers()),
+  getSingleUser: (id) => dispatch(getSingleUser(id)),
   deleteUser: (id) => dispatch(deleteUser(id, history)),
   updateAdminStatus: (user) => dispatch(updateAdminStatus(user, history)),
 });

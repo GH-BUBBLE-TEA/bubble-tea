@@ -7,6 +7,7 @@ import bubbleTeasReducer from "./bubbleTeas";
 import bubbleTeaReducer from "./singleBubbleTea";
 import cartReducer from "./lineItems";
 import usersReducer from "./users";
+import userReducer from "./singleUser";
 
 const reducer = combineReducers({
   auth,
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   singleBubbleTea: bubbleTeaReducer,
   cart: cartReducer,
   users: usersReducer,
+  user: userReducer,
 });
 
 const middleware = composeWithDevTools(
