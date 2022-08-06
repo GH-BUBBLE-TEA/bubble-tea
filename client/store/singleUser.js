@@ -2,7 +2,7 @@ import axios from "axios";
 
 const GOT_USER = "GOT_USER";
 
-// const SET_BUBBLETEA = "SET_BUBBLETEA";
+const SET_USER = "SET_USER";
 
 const gotSingleUser = (user) => {
   return {
@@ -11,12 +11,12 @@ const gotSingleUser = (user) => {
   };
 };
 
-// export const _setBubbleTea = (singleBubbleTea) => {
-//   return {
-//     type: SET_BUBBLETEA,
-//     singleBubbleTea,
-//   };
-// };
+export const _setUser = (user) => {
+  return {
+    type: SET_USER,
+    user,
+  };
+};
 
 export const getSingleUser = (id) => {
   return async (dispatch) => {
@@ -34,8 +34,8 @@ export default function userReducer(state = {}, action) {
     case GOT_USER:
       return action.user;
 
-    // case SET_BUBBLETEA:
-    //   return action.singleBubbleTea;
+    case SET_USER:
+      return action.user;
     default:
       return state;
   }

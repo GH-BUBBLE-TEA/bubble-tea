@@ -16,7 +16,7 @@ export class Home extends React.Component {
     this.props.updateAdminStatus({ ...user, isAdmin: !adminStatusValue });
   }
   render() {
-    const { username, isAdmin, users } = this.props;
+    const { isAdmin, users } = this.props;
     console.log(users);
 
     return (
@@ -91,7 +91,7 @@ export class Home extends React.Component {
  */
 const mapStateToProps = (state) => {
   return {
-    username: state.auth.username,
+    // username: state.auth.username,
     isAdmin: !!state.auth.isAdmin,
     // email: state.auth.email,
     id: state.auth.id,

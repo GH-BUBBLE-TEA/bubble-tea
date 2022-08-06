@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { updateUser } from "../store/users";
-import { getSingleUser } from "../store/singleUser";
+import { getSingleUser, _setUser } from "../store/singleUser";
 
 class EditUser extends Component {
   constructor() {
@@ -18,18 +18,15 @@ class EditUser extends Component {
   }
 
   componentDidMount() {
-    const { id } = this.props.match.params;
-
-    this.props.getSingleUser(id);
-    console.log("username:", this.props.user);
+    this.props.getSingleUser(this.props.id);
     this.setState({
-      username: this.props.username || "",
-      email: this.props.email || "",
+      username: this.props.user.username || "",
+      email: this.props.user.email || "",
     });
   }
-  //   componentWillUnmount() {
-  //     this.props.clearBubbleTea();
-  //   }
+  componentWillUnmount() {
+    this.props.clearUser();
+  }
 
   handleChange(evt) {
     this.setState({
@@ -68,14 +65,13 @@ class EditUser extends Component {
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  username: state.auth.username,
-  email: state.auth.email,
+  id: state.auth.id,
 });
 
 const mapDispatchToProps = (dispatch, { history }) => ({
   updateUser: (user) => dispatch(updateUser(user, history)),
   getSingleUser: (id) => dispatch(getSingleUser(id)),
-  //   clearBubbleTea: () => dispatch(_setBubbleTea({})),
+  clearUser: () => dispatch(_setUser({})),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditUser);
