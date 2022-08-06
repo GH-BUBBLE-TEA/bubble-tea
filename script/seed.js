@@ -13,15 +13,24 @@ async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
 
   //add dummy data
-  
+
   console.log("db synced!");
 
   // Creating Users
   const users = await Promise.all([
-    User.create({ username: "cody", password: "123" }),
-    User.create({ username: "murphy", password: "123" }),
+    User.create({
+      username: "cody",
+      password: "123",
+      isAdmin: true,
+      email: "cody@123.com",
+    }),
+    User.create({
+      username: "murphy",
+      password: "123",
+      email: "murphy@123.com",
+    }),
   ]);
-/*
+  /*
   const bubbleTeas = await Promise.all([
     BubbleTea.create({
       teaName: "Signature Alcohol Bubble Tea",
@@ -54,10 +63,12 @@ async function seed() {
       cody: users[0],
       murphy: users[1],
     },
-    bubbleTeas: await Promise.all(dummyData.map(tea => {
-         return BubbleTea.create(tea);
-    }))
-  }
+    bubbleTeas: await Promise.all(
+      dummyData.map((tea) => {
+        return BubbleTea.create(tea);
+      })
+    ),
+  };
 }
 
 /*

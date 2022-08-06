@@ -10,10 +10,8 @@ export class Menu extends React.Component {
       teaFilter: "All",
     };
     this.handleChange = this.handleChange.bind(this);
-    console.log("menu props:", this.props);
   }
   componentDidMount() {
-    console.log("component");
     this.props.fetchData();
   }
 
@@ -35,7 +33,16 @@ export class Menu extends React.Component {
     });
     return (
       <div>
+        {this.props.isAdmin ? (
+          <Link to="/menu/create">
+            <button id="addProduct">Add a new product</button>
+          </Link>
+        ) : (
+          ""
+        )}
+
         <div>
+          Filter by Category:
           <select
             id="category"
             value={this.state.teaFilter}
@@ -71,6 +78,7 @@ export class Menu extends React.Component {
 const mapStateToProps = (state) => {
   return {
     bubbleTeas: state.bubbleTeas,
+    isAdmin: !!state.auth.isAdmin,
   };
 };
 
