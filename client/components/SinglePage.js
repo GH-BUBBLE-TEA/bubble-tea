@@ -38,6 +38,8 @@ export class SinglePage extends React.Component {
           <button onClick={() => this.props.addToCart(bubbleTea)}>
             Add to Cart
           </button>
+
+          <div>Comments: </div>
         </main>
       </div>
     );

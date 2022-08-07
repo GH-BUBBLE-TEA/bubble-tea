@@ -77,7 +77,9 @@ export class Home extends React.Component {
               <Link to={`/home/edit/${this.props.user.id}`}>
                 <button>Edit</button>
               </Link>
-              <h2>Orders</h2>
+              <Link to="/orders">
+                <h2>Orders</h2>
+              </Link>
             </React.Fragment>
           )}
         </div>

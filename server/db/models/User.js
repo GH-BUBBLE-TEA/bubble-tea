@@ -21,6 +21,7 @@ const User = db.define("user", {
   email: {
     type: Sequelize.STRING,
     validate: { isEmail: true },
+    unique: true,
   },
 });
 

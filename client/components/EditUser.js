@@ -29,9 +29,16 @@ class EditUser extends Component {
   }
 
   handleChange(evt) {
-    this.setState({
-      [evt.target.name]: evt.target.value,
-    });
+    if (evt.target.password) {
+      this.setState({
+        [evt.target.name]: evt.target.value,
+      });
+    } else {
+      this.setState({
+        username: evt.target.username,
+        email: evt.target.email,
+      });
+    }
   }
 
   handleSubmit(evt) {
@@ -48,8 +55,8 @@ class EditUser extends Component {
         <form id="user-form" onSubmit={handleSubmit}>
           <label htmlFor="username">Username:</label>
           <input name="username" onChange={handleChange} value={username} />
-
-          {/* <label htmlFor="password">Password:</label>
+          {/* 
+          <label htmlFor="password">Password:</label>
           <input name="password" onChange={handleChange} value={password} /> */}
 
           <label htmlFor="email">Email:</label>
