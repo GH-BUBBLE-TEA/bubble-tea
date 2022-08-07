@@ -12,6 +12,16 @@ const LineItem = db.define("lineItem", {
     allowNull: false,
     defaultValue: 1,
   },
+  teaName: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false,
+  },
+  imageURL: {
+    type: Sequelize.TEXT,
+    defaultValue:
+      "https://cdn.pixabay.com/photo/2021/02/11/19/03/bubble-tea-6006193__340.png",
+  },
 });
 
 module.exports = LineItem;

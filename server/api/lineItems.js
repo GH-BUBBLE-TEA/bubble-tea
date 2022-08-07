@@ -20,7 +20,16 @@ router.get("/", async (req, res, next) => {
         where: {
           orderId: order.id,
         },
+        // include: [
+        //   {
+        //     model: BubbleTea,
+        //   },
+        // ],
       });
+
+      // const cart = Order.findByPk(order.id, {
+      //   include: [{ model: LineItem, include: [BubbleTea] }],
+      // });
       res.status(200).send(lineItem);
     }
   } catch (err) {
@@ -82,6 +91,7 @@ router.post("/", async (req, res, next) => {
           bubbleTeaId: bubbleTea.id,
           itemPrice: bubbleTea.defaultPrice,
           quantity: 1,
+          teaName: bubbleTea.teaName,
           //totalPrice: itemPrice * quantity,
         });
         res.status(201).json(newLineItems);
@@ -95,11 +105,32 @@ router.post("/", async (req, res, next) => {
         bubbleTeaId: bubbleTea.id,
         itemPrice: bubbleTea.defaultPrice,
         quantity: 1,
+        teaName: bubbleTea.teaName,
         //totalPrice: itemPrice * quantity,
       });
       res.status(201).json(newLineItems);
     }
   } catch (err) {
     next(err);
+  }
+});
+
+router.delete("/:bubbleTeaId", async (req, res, next) => {
+  try {
+    const user = await User.findByToken(req.headers.authorization);
+    const order = await Order.findOne({
+      where: {
+        userId: user.id,
+        status: "Pending",
+      },
+    });
+    const lineItem = await LineItem.findOne({
+      bubbleTeaId: req.params.bubbleTeaId,
+      orderId: order.id,
+    });
+    await lineItem.destroy();
+    res.json(lineItem);
+  } catch (error) {
+    next(error);
   }
 });
