@@ -35,9 +35,18 @@ export class SinglePage extends React.Component {
           <img src={bubbleTea.imageURL} />
           <h3>${bubbleTea.defaultPrice}</h3>
           <h4>{bubbleTea.description}</h4>
-          <button onClick={() => this.props.addToCart(bubbleTea)}>
-            Add to Cart
-          </button>
+          <div>
+            {bubbleTea.stock > 0 ? (
+              <div>
+                Available{" "}
+                <button onClick={() => this.props.addToCart(bubbleTea)}>
+                  Add to Cart
+                </button>
+              </div>
+            ) : (
+              <div>Sorry, this product is currently not available</div>
+            )}
+          </div>
 
           <div>Comments: </div>
         </main>

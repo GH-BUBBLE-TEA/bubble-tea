@@ -19,6 +19,14 @@ export class Menu extends React.Component {
     this.setState({ teaFilter: event.target.value });
   }
 
+  // dataSearch(e) {
+  //   const value = e.target.value.toLowerCase();
+  //   this.props.bubbleTeas.forEach((bubbleTea) => {
+  //     const isVisible = bubbleTea.teaName.toLowerCase().includes(value);
+  //     bubbleTea.toggle("hide", !isVisible);
+  //   });
+  // }
+
   render() {
     const allbubbleTeas = this.props.bubbleTeas.filter((singleBubbleTea) => {
       if (this.state.teaFilter === "Milk Tea") {
@@ -33,6 +41,10 @@ export class Menu extends React.Component {
     });
     return (
       <div>
+        {/* <div className="search-wrapper">
+          <label htmlFor="search">Search Products:</label>
+          <input type="search" id="search" onChange={this.dataSearch()} />
+        </div> */}
         {this.props.isAdmin ? (
           <Link to="/menu/create">
             <button id="addProduct">Add a new product</button>

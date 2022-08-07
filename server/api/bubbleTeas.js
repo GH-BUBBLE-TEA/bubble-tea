@@ -3,10 +3,15 @@ const {
   models: { BubbleTea },
 } = require("../db");
 module.exports = router;
+const { Op } = require("sequelize");
 
 router.get("/", async (req, res, next) => {
   try {
-    const bubbleTeas = await BubbleTea.findAll();
+    const bubbleTeas = await BubbleTea.findAll({
+      where: {
+        stock: { [Op.gt]: 0 },
+      },
+    });
     res.json(bubbleTeas);
   } catch (err) {
     next(err);
