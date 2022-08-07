@@ -4,7 +4,7 @@ const db = require("./db");
 
 const User = require("./models/User");
 const BubbleTea = require("./models/BubbleTea");
-const LineItems = require("./models/LineItems");
+const LineItem = require("./models/LineItem");
 const Order = require("./models/Order");
 //const { useReducer } = require("react");
 
@@ -13,15 +13,15 @@ const Order = require("./models/Order");
 User.hasMany(Order);
 Order.belongsTo(User);
 
-Order.belongsToMany(BubbleTea, { through: LineItems });
-BubbleTea.belongsToMany(Order, { through: LineItems });
+Order.belongsToMany(BubbleTea, { through: LineItem });
+BubbleTea.belongsToMany(Order, { through: LineItem });
 
 module.exports = {
   db,
   models: {
     User,
     BubbleTea,
-    LineItems,
+    LineItem,
     Order,
   },
 };
