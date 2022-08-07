@@ -1,26 +1,112 @@
-import React from 'react'
-import {connect} from 'react-redux'
-
+import React from "react";
+import { connect } from "react-redux";
+import { getUsers, deleteUser, updateAdminStatus } from "../store/users";
+import { Link } from "react-router-dom";
+import { getSingleUser } from "../store/singleUser";
 /**
  * COMPONENT
  */
-export const Home = props => {
-  const {username} = props
+export class Home extends React.Component {
+  componentDidMount() {
+    this.props.getUsers();
+    this.props.getSingleUser(this.props.id);
+  }
 
-  return (
-    <div>
-      <h3>Welcome, {username}</h3>
-    </div>
-  )
+  updateStatus(user, adminStatusValue) {
+    this.props.updateAdminStatus({ ...user, isAdmin: !adminStatusValue });
+  }
+  render() {
+    const { isAdmin, users } = this.props;
+    console.log(users);
+
+    return (
+      <div>
+        <h3>Welcome, {this.props.user.username}</h3>
+        <div>
+          {isAdmin ? (
+            <React.Fragment>
+              <div>
+                {" "}
+                Users:
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Username</th>
+                      <th>Email</th>
+                      <th>Admin User</th>
+                      <th>Option</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users.map((user) => {
+                      return (
+                        <tr key={user.id}>
+                          <td>{user.username}</td>
+                          <td>{user.email}</td>
+                          <td>
+                            {user.isAdmin ? "TRUE" : "FALSE"}
+                            <button
+                              onClick={() =>
+                                this.updateStatus(user, user.isAdmin)
+                              }
+                            >
+                              Change Status
+                            </button>
+                          </td>
+
+                          <td>
+                            <button
+                              onClick={() => this.props.deleteUser(user.id)}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+              <div>Order Lists:</div>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <h2>Profile:</h2>
+              <h3>Username: {this.props.user.username}</h3>
+              <h3>Email: {this.props.user.email}</h3>
+              <Link to={`/home/edit/${this.props.user.id}`}>
+                <button>Edit</button>
+              </Link>
+              <Link to="/orders">
+                <h2>Orders</h2>
+              </Link>
+            </React.Fragment>
+          )}
+        </div>
+      </div>
+    );
+  }
 }
 
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapStateToProps = (state) => {
   return {
-    username: state.auth.username
-  }
-}
+    // username: state.auth.username,
+    isAdmin: !!state.auth.isAdmin,
+    // email: state.auth.email,
+    id: state.auth.id,
+    users: state.users,
+    user: state.user,
+  };
+};
 
-export default connect(mapState)(Home)
+const mapDispatchToProps = (dispatch, { history }) => ({
+  getUsers: () => dispatch(getUsers()),
+  getSingleUser: (id) => dispatch(getSingleUser(id)),
+  deleteUser: (id) => dispatch(deleteUser(id, history)),
+  updateAdminStatus: (user) => dispatch(updateAdminStatus(user, history)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

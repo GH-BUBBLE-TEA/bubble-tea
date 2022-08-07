@@ -89,7 +89,7 @@ const dummyData = [
     teaCategories: "Fruit Tea",
     defaultPrice: 6,
     description: "Our organic green tea blended with refreshing winter melon.",
-    stock: 2,
+    stock: 0,
   },
   {
     teaName: "Boozy Peach Paradise Fruit Tea",

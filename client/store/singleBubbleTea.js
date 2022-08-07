@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const GOT_SINGLEBUBBLETEA = "GOT_SINGLEBUBBLETEA";
-// const SENT_CART = "SENT_CART";
+
+const SET_BUBBLETEA = "SET_BUBBLETEA";
 
 const gotSingleBubbleTea = (singleBubbleTea) => {
   return {
@@ -10,12 +11,12 @@ const gotSingleBubbleTea = (singleBubbleTea) => {
   };
 };
 
-// const sentBubbleTeaToCart = (singleBubbleTea) => {
-//   return {
-//     type: SENT_CART,
-//     singleBubbleTea,
-//   };
-// };
+export const _setBubbleTea = (singleBubbleTea) => {
+  return {
+    type: SET_BUBBLETEA,
+    singleBubbleTea,
+  };
+};
 
 export const getSingleBubbleTea = (id) => {
   return async (dispatch) => {
@@ -28,22 +29,13 @@ export const getSingleBubbleTea = (id) => {
   };
 };
 
-// export const sendBubbleTeaToCart = (id) => {
-//   return async (dispatch) => {
-//     try {
-//       const { data } = await axios.post(`/api/lineItems`, id);
-//       dispatch(sentBubbleTeaToCart(data));
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
-// };
-
 export default function bubbleTeaReducer(state = {}, action) {
   switch (action.type) {
     case GOT_SINGLEBUBBLETEA:
       return action.singleBubbleTea;
 
+    case SET_BUBBLETEA:
+      return action.singleBubbleTea;
     default:
       return state;
   }

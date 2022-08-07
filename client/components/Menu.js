@@ -10,16 +10,22 @@ export class Menu extends React.Component {
       teaFilter: "All",
     };
     this.handleChange = this.handleChange.bind(this);
-    console.log("menu props:", this.props);
   }
   componentDidMount() {
-    console.log("component");
     this.props.fetchData();
   }
 
   handleChange(event) {
     this.setState({ teaFilter: event.target.value });
   }
+
+  // dataSearch(e) {
+  //   const value = e.target.value.toLowerCase();
+  //   this.props.bubbleTeas.forEach((bubbleTea) => {
+  //     const isVisible = bubbleTea.teaName.toLowerCase().includes(value);
+  //     bubbleTea.toggle("hide", !isVisible);
+  //   });
+  // }
 
   render() {
     const allbubbleTeas = this.props.bubbleTeas.filter((singleBubbleTea) => {
@@ -35,7 +41,20 @@ export class Menu extends React.Component {
     });
     return (
       <div>
+        {/* <div className="search-wrapper">
+          <label htmlFor="search">Search Products:</label>
+          <input type="search" id="search" onChange={this.dataSearch()} />
+        </div> */}
+        {this.props.isAdmin ? (
+          <Link to="/menu/create">
+            <button id="addProduct">Add a new product</button>
+          </Link>
+        ) : (
+          ""
+        )}
+
         <div>
+          Filter by Category:
           <select
             id="category"
             value={this.state.teaFilter}
@@ -71,6 +90,7 @@ export class Menu extends React.Component {
 const mapStateToProps = (state) => {
   return {
     bubbleTeas: state.bubbleTeas,
+    isAdmin: !!state.auth.isAdmin,
   };
 };
 
