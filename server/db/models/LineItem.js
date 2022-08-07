@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-const LineItems = db.define("lineItems", {
+const LineItem = db.define("lineItem", {
   itemPrice: {
     type: Sequelize.DECIMAL(10, 2),
     allowNull: false,
@@ -12,11 +12,6 @@ const LineItems = db.define("lineItems", {
     allowNull: false,
     defaultValue: 1,
   },
-  totalPrice: {
-    type: Sequelize.DECIMAL(10, 2),
-    allowNull: false,
-    defaultValue: 0.0,
-  },
 });
 
-module.exports = LineItems;
+module.exports = LineItem;

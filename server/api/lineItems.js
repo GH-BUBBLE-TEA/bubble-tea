@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { LineItems, BubbleTea, User, Order },
+  models: { LineItem, BubbleTea, User, Order },
 } = require("../db");
 module.exports = router;
 
@@ -16,12 +16,12 @@ router.get("/", async (req, res, next) => {
     if (!order) {
       res.send("there is no item in the cart");
     } else {
-      const lineItems = await LineItems.findAll({
+      const lineItem = await LineItem.findAll({
         where: {
           orderId: order.id,
         },
       });
-      res.status(200).send(lineItems);
+      res.status(200).send(lineItem);
     }
   } catch (err) {
     next(err);
@@ -65,7 +65,7 @@ router.post("/", async (req, res, next) => {
     });
 
     if (order) {
-      const duplicate = await LineItems.findOne({
+      const duplicate = await LineItem.findOne({
         where: {
           orderId: order.id,
           bubbleTeaId: bubbleTea.id,
@@ -77,7 +77,7 @@ router.post("/", async (req, res, next) => {
         await duplicate.save();
         res.status(201).json(duplicate);
       } else {
-        const newLineItems = await LineItems.create({
+        const newLineItems = await LineItem.create({
           orderId: order.id,
           bubbleTeaId: bubbleTea.id,
           itemPrice: bubbleTea.defaultPrice,
@@ -90,7 +90,7 @@ router.post("/", async (req, res, next) => {
       const newOrder = await Order.create({
         userId: user.id,
       });
-      const newLineItems = await LineItems.create({
+      const newLineItems = await LineItem.create({
         orderId: newOrder.id,
         bubbleTeaId: bubbleTea.id,
         itemPrice: bubbleTea.defaultPrice,
