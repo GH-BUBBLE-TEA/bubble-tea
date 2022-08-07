@@ -2,18 +2,31 @@ import React from "react";
 import { connect } from "react-redux";
 import { getCartInfo } from "../store/lineItems";
 import { getSingleBubbleTea } from "../store/singleBubbleTea";
-import { deleteFromCart } from "../store/lineItems";
+import {
+  deleteFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+} from "../store/lineItems";
 
 export class Cart extends React.Component {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
   componentDidMount() {
     this.props.getCartInfo();
+  }
+
+  handleClick(item) {
+    console.log(this.props);
+    this.props.increaseQuantity(item);
+    this.props.getCartInfo();
+    this.setState();
   }
 
   render() {
     let finalCost = 0;
     let totalItems = 0;
-    console.log(this.props);
-    // console.log(this.props.lineItems.getSingleBubbleTea());
     return (
       <div>
         <h1>Shopping Cart:</h1>
@@ -26,9 +39,14 @@ export class Cart extends React.Component {
                 <h3>- {cartItem.teaName}</h3>
                 <img src={cartItem.imageURL} />
                 <h4>
-                  <button>-</button> Quantity: {cartItem.quantity}
-                  <button>+</button>Total Price: $
-                  {cartItem.itemPrice * cartItem.quantity}
+                  <button onClick={() => this.props.decreaseQuantity(cartItem)}>
+                    -
+                  </button>{" "}
+                  Quantity: {cartItem.quantity}
+                  <button onClick={() => this.props.increaseQuantity(cartItem)}>
+                    +
+                  </button>
+                  Total Price: ${cartItem.itemPrice * cartItem.quantity}
                   <button
                     onClick={() =>
                       this.props.deleteFromCart(cartItem.bubbleTeaId)
@@ -59,6 +77,8 @@ const mapDispatchToProps = (dispatch) => ({
   getCartInfo: () => dispatch(getCartInfo()),
   getSingleBubbleTea: (id) => dispatch(getSingleBubbleTea(id)),
   deleteFromCart: (bubbleTeaId) => dispatch(deleteFromCart(bubbleTeaId)),
+  increaseQuantity: (item) => dispatch(increaseQuantity(item)),
+  decreaseQuantity: (item) => dispatch(decreaseQuantity(item)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

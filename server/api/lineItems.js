@@ -62,7 +62,6 @@ router.get("/", async (req, res, next) => {
 // });
 
 router.post("/", async (req, res, next) => {
-  console.log("req.body: ", req.body);
   try {
     const bubbleTea = req.body;
     const user = await User.findByToken(req.headers.authorization);
@@ -92,7 +91,6 @@ router.post("/", async (req, res, next) => {
           itemPrice: bubbleTea.defaultPrice,
           quantity: 1,
           teaName: bubbleTea.teaName,
-          //totalPrice: itemPrice * quantity,
         });
         res.status(201).json(newLineItems);
       }
@@ -106,7 +104,6 @@ router.post("/", async (req, res, next) => {
         itemPrice: bubbleTea.defaultPrice,
         quantity: 1,
         teaName: bubbleTea.teaName,
-        //totalPrice: itemPrice * quantity,
       });
       res.status(201).json(newLineItems);
     }
@@ -115,22 +112,21 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.delete("/:bubbleTeaId", async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
   try {
-    const user = await User.findByToken(req.headers.authorization);
-    const order = await Order.findOne({
-      where: {
-        userId: user.id,
-        status: "Pending",
-      },
-    });
-    const lineItem = await LineItem.findOne({
-      bubbleTeaId: req.params.bubbleTeaId,
-      orderId: order.id,
-    });
+    const lineItem = await LineItem.findByPk(req.params.id);
     await lineItem.destroy();
-    res.json(lineItem);
+    res.send(lineItem);
   } catch (error) {
     next(error);
+  }
+});
+
+router.put("/:id", async (req, res, next) => {
+  try {
+    const updatedItem = await LineItem.findByPk(req.params.id);
+    res.send(await updatedItem.update(req.body));
+  } catch (err) {
+    next(err);
   }
 });
