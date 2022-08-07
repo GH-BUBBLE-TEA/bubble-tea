@@ -3,6 +3,8 @@ import axios from "axios";
 const GOT_CART = "GOT_CART";
 const ADD_CART = "ADD_CART";
 const DELETE_ITEM = "DELETE_ITEM";
+const INCREASE_QUANTITY = "INCREASE_QUANTITY";
+const DECREASE_QUANTITY = "DECREASE_QUANTITY";
 
 const gotCartInfo = (items) => {
   return {
@@ -21,6 +23,20 @@ const addedToCart = (item) => {
 const deletedFromCart = (item) => {
   return {
     type: DELETE_ITEM,
+    item,
+  };
+};
+
+const increasedQuantity = (item) => {
+  return {
+    type: INCREASE_QUANTITY,
+    item,
+  };
+};
+
+const decreasedQuantity = (item) => {
+  return {
+    type: DECREASE_QUANTITY,
     item,
   };
 };
@@ -70,6 +86,34 @@ export const deleteFromCart = (bubbleTeaId) => {
   };
 };
 
+export const increaseQuantity = (item) => {
+  return async (dispatch) => {
+    try {
+      const { data } = axios.put(`/api/lineItems/${item.bubbleTeaId}`, {
+        quantity: item.quantity + 1,
+      });
+
+      dispatch(increasedQuantity(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const decreaseQuantity = (item) => {
+  return async (dispatch) => {
+    try {
+      const { data } = axios.put(`/api/lineItems/${item.bubbleTeaId}`, {
+        quantity: item.quantity - 1,
+      });
+
+      dispatch(decreasedQuantity(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 export default function cartReducer(state = [], action) {
   switch (action.type) {
     case GOT_CART:
@@ -79,6 +123,18 @@ export default function cartReducer(state = [], action) {
     case DELETE_ITEM:
       return state.filter(
         (item) => item.bubbleTeaId !== action.item.bubbleTeaId
+      );
+    case INCREASE_QUANTITY:
+      return state.map((item) =>
+        item.bubbleTeaId === action.item.bubbleTeaId
+          ? { ...item, quantity: action.item.quantity }
+          : item
+      );
+    case DECREASE_QUANTITY:
+      return state.map((item) =>
+        item.bubbleTeaId === action.item.bubbleTeaId
+          ? { ...item, quantity: action.item.quantity }
+          : item
       );
     default:
       return state;
