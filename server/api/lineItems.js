@@ -1,37 +1,34 @@
-const router = require("express").Router();
+const router = require('express').Router();
 const {
   models: { LineItem, BubbleTea, User, Order },
-} = require("../db");
+} = require('../db');
 module.exports = router;
 
-router.get("/", async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
     const order = await Order.findOne({
       where: {
         userId: user.id,
-        status: "Pending",
+        status: 'Pending',
       },
     });
-    if (!order) {
-      res.send("there is no item in the cart");
-    } else {
-      const lineItem = await LineItem.findAll({
-        where: {
-          orderId: order.id,
-        },
-        // include: [
-        //   {
-        //     model: BubbleTea,
-        //   },
-        // ],
-      });
 
-      // const cart = Order.findByPk(order.id, {
-      //   include: [{ model: LineItem, include: [BubbleTea] }],
-      // });
-      res.status(200).send(lineItem);
-    }
+    const lineItem = await LineItem.findAll({
+      where: {
+        orderId: order.id,
+      },
+      // include: [
+      //   {
+      //     model: BubbleTea,
+      //   },
+      // ],
+    });
+
+    // const cart = Order.findByPk(order.id, {
+    //   include: [{ model: LineItem, include: [BubbleTea] }],
+    // });
+    res.status(200).send(lineItem);
   } catch (err) {
     next(err);
   }
@@ -61,14 +58,14 @@ router.get("/", async (req, res, next) => {
 //   }
 // });
 
-router.post("/", async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     const bubbleTea = req.body;
     const user = await User.findByToken(req.headers.authorization);
     const order = await Order.findOne({
       where: {
         userId: user.id,
-        status: "Pending",
+        status: 'Pending',
       },
     });
 
@@ -112,7 +109,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     const lineItem = await LineItem.findByPk(req.params.id);
     await lineItem.destroy();
@@ -122,9 +119,14 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put('/:order/:id', async (req, res, next) => {
   try {
-    const updatedItem = await LineItem.findByPk(req.params.id);
+    const updatedItem = await LineItem.findOne({
+      where: {
+        orderId: +req.params.order,
+        bubbleTeaId: +req.params.id,
+      },
+    });
     res.send(await updatedItem.update(req.body));
   } catch (err) {
     next(err);

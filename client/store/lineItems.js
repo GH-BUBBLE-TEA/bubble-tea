@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 
-const GOT_CART = "GOT_CART";
-const ADD_CART = "ADD_CART";
-const DELETE_ITEM = "DELETE_ITEM";
-const INCREASE_QUANTITY = "INCREASE_QUANTITY";
-const DECREASE_QUANTITY = "DECREASE_QUANTITY";
+const GOT_CART = 'GOT_CART';
+const ADD_CART = 'ADD_CART';
+const DELETE_ITEM = 'DELETE_ITEM';
+const INCREASE_QUANTITY = 'INCREASE_QUANTITY';
+const DECREASE_QUANTITY = 'DECREASE_QUANTITY';
 
 const gotCartInfo = (items) => {
   return {
@@ -44,8 +44,8 @@ const decreasedQuantity = (item) => {
 export const getCartInfo = () => {
   return async (dispatch) => {
     try {
-      const token = window.localStorage.getItem("token");
-      const { data } = await axios.get("/api/lineItems", {
+      const token = window.localStorage.getItem('token');
+      const { data } = await axios.get('/api/lineItems', {
         headers: {
           authorization: token,
         },
@@ -60,8 +60,8 @@ export const getCartInfo = () => {
 export const addToCart = (bubbleTea) => {
   return async (dispatch) => {
     try {
-      const token = window.localStorage.getItem("token");
-      const { data } = await axios.post("/api/lineItems", bubbleTea, {
+      const token = window.localStorage.getItem('token');
+      const { data } = await axios.post('/api/lineItems', bubbleTea, {
         headers: {
           authorization: token,
         },
@@ -89,10 +89,12 @@ export const deleteFromCart = (bubbleTeaId) => {
 export const increaseQuantity = (item) => {
   return async (dispatch) => {
     try {
-      const { data } = axios.put(`/api/lineItems/${item.bubbleTeaId}`, {
-        quantity: item.quantity + 1,
-      });
-
+      const { data } = await axios.put(
+        `/api/lineItems/${item.orderId}/${item.bubbleTeaId}`,
+        {
+          quantity: item.quantity + 1,
+        }
+      );
       dispatch(increasedQuantity(data));
     } catch (err) {
       console.log(err);
@@ -103,10 +105,12 @@ export const increaseQuantity = (item) => {
 export const decreaseQuantity = (item) => {
   return async (dispatch) => {
     try {
-      const { data } = axios.put(`/api/lineItems/${item.bubbleTeaId}`, {
-        quantity: item.quantity - 1,
-      });
-
+      const { data } = await axios.put(
+        `/api/lineItems/${item.orderId}/${item.bubbleTeaId}`,
+        {
+          quantity: item.quantity - 1,
+        }
+      );
       dispatch(decreasedQuantity(data));
     } catch (err) {
       console.log(err);
