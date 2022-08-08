@@ -93,9 +93,7 @@ export class Home extends React.Component {
  */
 const mapStateToProps = (state) => {
   return {
-    // username: state.auth.username,
     isAdmin: !!state.auth.isAdmin,
-    // email: state.auth.email,
     id: state.auth.id,
     users: state.users,
     user: state.user,

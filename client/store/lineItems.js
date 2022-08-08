@@ -73,12 +73,10 @@ export const addToCart = (bubbleTea) => {
   };
 };
 
-export const deleteFromCart = (bubbleTeaId) => {
+export const deleteFromCart = (id) => {
   return async (dispatch) => {
     try {
-      const { data: lineItem } = await axios.delete(
-        `/api/lineItems/${bubbleTeaId}`
-      );
+      const { data: lineItem } = await axios.delete(`/api/lineItems/${id}`);
       dispatch(deletedFromCart(lineItem));
     } catch (err) {
       console.log(err);
@@ -89,7 +87,7 @@ export const deleteFromCart = (bubbleTeaId) => {
 export const increaseQuantity = (item) => {
   return async (dispatch) => {
     try {
-      const { data } = axios.put(`/api/lineItems/${item.bubbleTeaId}`, {
+      const { data } = await axios.put(`/api/lineItems/${item.id}`, {
         quantity: item.quantity + 1,
       });
 
@@ -103,7 +101,7 @@ export const increaseQuantity = (item) => {
 export const decreaseQuantity = (item) => {
   return async (dispatch) => {
     try {
-      const { data } = axios.put(`/api/lineItems/${item.bubbleTeaId}`, {
+      const { data } = await axios.put(`/api/lineItems/${item.id}`, {
         quantity: item.quantity - 1,
       });
 

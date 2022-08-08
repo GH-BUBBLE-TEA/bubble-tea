@@ -10,9 +10,9 @@ class CreateBubbleTea extends Component {
       teaName: "",
       teaCategories: "",
       imageURL: "",
-      defaultPrice: "",
+      defaultPrice: 0.0,
       description: "",
-      stock: "",
+      stock: 0.0,
     };
 
     this.handleChange = this.handleChange.bind(this);

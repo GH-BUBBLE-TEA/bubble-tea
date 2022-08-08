@@ -16,7 +16,7 @@ router.get("/", async (req, res, next) => {
     if (!order) {
       res.send("there is no item in the cart");
     } else {
-      const lineItem = await LineItem.findAll({
+      const lineItems = await LineItem.findAll({
         where: {
           orderId: order.id,
         },
@@ -26,11 +26,25 @@ router.get("/", async (req, res, next) => {
         //   },
         // ],
       });
-
-      // const cart = Order.findByPk(order.id, {
-      //   include: [{ model: LineItem, include: [BubbleTea] }],
-      // });
-      res.status(200).send(lineItem);
+      res.status(200).send(lineItems);
+      // console.log("lineItem: ", lineItems);
+      // const cart = async () => {
+      //   return Promise.all(
+      //     lineItems.map(async (lineItem) => {
+      //       await BubbleTea.findOne({
+      //         where: {
+      //           id: lineItem.dataValues.bubbleTeaId,
+      //         },
+      //       });
+      //     })
+      //   );
+      // };
+      // const carItems = await cart();
+      // console.log("cart: ", carItems);
+      // // const cart = Order.findByPk(order.id, {
+      // //   include: [{ model: LineItem, include: [BubbleTea] }],
+      // // });
+      // res.status(200).send(carItems);
     }
   } catch (err) {
     next(err);
@@ -126,6 +140,15 @@ router.put("/:id", async (req, res, next) => {
   try {
     const updatedItem = await LineItem.findByPk(req.params.id);
     res.send(await updatedItem.update(req.body));
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/:id", async (req, res, next) => {
+  try {
+    const lineItem = await LineItem.findByPk(req.params.id);
+    res.status(200).send(lineItem);
   } catch (err) {
     next(err);
   }

@@ -26,6 +26,16 @@ router.get("/:id", async (req, res, next) => {
     next(e);
   }
 });
+
+router.get("/orders/:id", async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    res.json(await User.getOrders());
+  } catch (e) {
+    next(e);
+  }
+});
+
 router.put("/:id", async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);

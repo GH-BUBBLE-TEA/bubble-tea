@@ -22,6 +22,11 @@ const LineItem = db.define("lineItem", {
     defaultValue:
       "https://cdn.pixabay.com/photo/2021/02/11/19/03/bubble-tea-6006193__340.png",
   },
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
 });
 
 module.exports = LineItem;
