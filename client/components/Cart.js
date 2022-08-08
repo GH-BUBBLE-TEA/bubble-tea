@@ -30,38 +30,46 @@ export class Cart extends React.Component {
     return (
       <div>
         <h1>Shopping Cart:</h1>
-        <h2>
-          {this.props.cart.map((cartItem) => {
-            finalCost += cartItem.itemPrice * cartItem.quantity;
-            totalItems += cartItem.quantity;
-            return (
-              <div key={cartItem.bubbleTeaId}>
-                <h3>- {cartItem.teaName}</h3>
-                <img src={cartItem.imageURL} />
-                <h4>
-                  <button onClick={() => this.props.decreaseQuantity(cartItem)}>
-                    -
-                  </button>{" "}
-                  Quantity: {cartItem.quantity}
-                  <button onClick={() => this.props.increaseQuantity(cartItem)}>
-                    +
-                  </button>
-                  Total Price: ${cartItem.itemPrice * cartItem.quantity}
-                  <button
-                    onClick={() =>
-                      this.props.deleteFromCart(cartItem.bubbleTeaId)
-                    }
-                  >
-                    Delete
-                  </button>
-                </h4>
-              </div>
-            );
-          })}
-        </h2>
-        <h3>Total items in the cart: {totalItems} </h3>
-        <h4>Grand Total: ${finalCost}</h4>
-        <button>Check out</button>
+        {this.props.cart.length !== 0 ? (
+          <div>
+            <h2>
+              {this.props.cart.map((cartItem) => {
+                finalCost += cartItem.itemPrice * cartItem.quantity;
+                totalItems += cartItem.quantity;
+                return (
+                  <div key={cartItem.id}>
+                    <h3>- {cartItem.teaName}</h3>
+                    <img src={cartItem.imageURL} />
+                    <h4>
+                      <button
+                        onClick={() => this.props.decreaseQuantity(cartItem)}
+                      >
+                        -
+                      </button>{" "}
+                      Quantity: {cartItem.quantity}
+                      <button
+                        onClick={() => this.props.increaseQuantity(cartItem)}
+                      >
+                        +
+                      </button>
+                      Total Price: ${cartItem.itemPrice * cartItem.quantity}
+                      <button
+                        onClick={() => this.props.deleteFromCart(cartItem.id)}
+                      >
+                        Delete
+                      </button>
+                    </h4>
+                  </div>
+                );
+              })}
+            </h2>
+            <h3>Total items in the cart: {totalItems} </h3>
+            <h4>Grand Total: ${finalCost}</h4>
+            <button>Check out</button>
+          </div>
+        ) : (
+          <h3>There is no item in the cart.</h3>
+        )}
       </div>
     );
   }
@@ -76,7 +84,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   getCartInfo: () => dispatch(getCartInfo()),
   getSingleBubbleTea: (id) => dispatch(getSingleBubbleTea(id)),
-  deleteFromCart: (bubbleTeaId) => dispatch(deleteFromCart(bubbleTeaId)),
+  deleteFromCart: (lineItemId) => dispatch(deleteFromCart(lineItemId)),
   increaseQuantity: (item) => dispatch(increaseQuantity(item)),
   decreaseQuantity: (item) => dispatch(decreaseQuantity(item)),
 });

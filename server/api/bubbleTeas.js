@@ -20,6 +20,7 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
+    console.log("REQ.BODY: ", req.body);
     res.status(201).json(await BubbleTea.create(req.body));
   } catch (err) {
     next(err);
