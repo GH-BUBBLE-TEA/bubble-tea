@@ -40,3 +40,12 @@ router.get("/:id", async (req, res, next) => {
     next(e);
   }
 });
+
+router.put("/:orderId", async (req, res, next) => {
+  try {
+    const order = await Order.findByPk(req.params.orderId);
+    res.send(await order.update({ status: "Ordered" }));
+  } catch (e) {
+    next(e);
+  }
+});

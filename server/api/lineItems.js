@@ -60,7 +60,7 @@ router.post("/", async (req, res, next) => {
         status: "Pending",
       },
     });
-
+    console.log("DUPLICATE-ORDER: ", order);
     if (order) {
       const duplicate = await LineItem.findOne({
         where: {
@@ -87,6 +87,7 @@ router.post("/", async (req, res, next) => {
       const newOrder = await Order.create({
         userId: user.id,
       });
+      console.log("NEWORDER: ", newOrder);
       const newLineItems = await LineItem.create({
         orderId: newOrder.id,
         bubbleTeaId: bubbleTea.id,

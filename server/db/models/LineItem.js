@@ -14,7 +14,7 @@ const LineItem = db.define("lineItem", {
   },
   teaName: {
     type: Sequelize.STRING,
-    unique: true,
+
     allowNull: false,
   },
   imageURL: {
