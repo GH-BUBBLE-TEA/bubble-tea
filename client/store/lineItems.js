@@ -101,14 +101,18 @@ export const increaseQuantity = (item) => {
 export const decreaseQuantity = (item) => {
   return async (dispatch) => {
     try {
-      // if (item.quantity <= 0) {
-      //   deleteFromCart(item.id);
-
-      const { data } = await axios.put(`/api/lineItems/${item.id}`, {
-        quantity: item.quantity - 1,
-      });
-
-      dispatch(decreasedQuantity(data));
+      if ((item.quantity = 1)) {
+        const { data: lineItem } = await axios.delete(
+          `/api/lineItems/${item.id}`
+        );
+        dispatch(deletedFromCart(lineItem));
+        return;
+      } else {
+        const { data } = await axios.put(`/api/lineItems/${item.id}`, {
+          quantity: item.quantity - 1,
+        });
+        dispatch(decreasedQuantity(data));
+      }
     } catch (err) {
       console.log(err);
     }
