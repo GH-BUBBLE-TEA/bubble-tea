@@ -4,6 +4,7 @@ const GOT_USERS = "GOT_USERS";
 const DELETE_USER = "DELETE_USER";
 const UPDATE_ADMIN_STATUS = "UPDATE_ADMIN_STATUS";
 const UPDATE_USER = "UPDATE_USER";
+const GUEST_USER = "GUEST_USER";
 
 const gotUsers = (users) => {
   return {
@@ -29,6 +30,13 @@ const updatedAdminStatus = (user) => {
 const updatedUser = (user) => {
   return {
     type: UPDATE_USER,
+    user,
+  };
+};
+
+const createdGuest = (user) => {
+  return {
+    type: GUEST_USER,
     user,
   };
 };
@@ -73,6 +81,17 @@ export const updateUser = (user, history) => {
     try {
       const { data } = await axios.put(`/api/users/${user.id}`, user);
       dispatch(updatedUser(data));
+      history.push("/home");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+export const guestUser = (user) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`/api/users/${user.id}`, user);
+      dispatch(createdGuest(data));
       history.push("/home");
     } catch (err) {
       console.log(err);

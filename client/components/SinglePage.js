@@ -9,9 +9,15 @@ import { addToCart } from "../store/lineItems";
 
 export class SinglePage extends React.Component {
   componentDidMount() {
+    console.log("this.prop.state: ", this.props.state);
     this.props.getSingleBubbleTea(this.props.match.params.id);
   }
-
+  addToCart(bubbleTea) {
+    if (this.props.state.auth) {
+      this.props.addToCart(bubbleTea);
+    } else {
+    }
+  }
   render() {
     const bubbleTea = this.props.bubbleTea;
     return (
@@ -40,7 +46,7 @@ export class SinglePage extends React.Component {
               <div>
                 Available stock: {bubbleTea.stock}
                 <div>
-                  <button onClick={() => this.props.addToCart(bubbleTea)}>
+                  <button onClick={() => addToCart(bubbleTea)}>
                     Add to Cart
                   </button>
                 </div>
@@ -60,6 +66,7 @@ export class SinglePage extends React.Component {
 const mapState = (state) => ({
   bubbleTea: state.singleBubbleTea,
   isAdmin: !!state.auth.isAdmin,
+  state,
 });
 
 const mapDispatch = (dispatch, { history }) => ({

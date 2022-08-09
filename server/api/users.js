@@ -44,3 +44,13 @@ router.delete("/:id", async (req, res, next) => {
     next(error);
   }
 });
+router.post("/", async (req, res, next) => {
+  try {
+    const user = await User.create({});
+    const guest = window.localStorage.setItem("guest");
+    guest = user.id;
+    res.send(user);
+  } catch (error) {
+    next(error);
+  }
+});
