@@ -83,39 +83,39 @@ User.beforeCreate(hashPassword);
 User.beforeUpdate(hashPassword);
 User.beforeBulkCreate((users) => Promise.all(users.map(hashPassword)));
 
-User.getOrders = async function () {
-  console.log("getOrders: ", new this());
-  const orders = await Order.findAll({
-    where: {
-      userId: this.id,
-      status: "Pending",
-    },
-  });
-  if (!orders) {
-    return "You have not ordered anything yet! Start shopping!";
-  } else {
-    // const lineItem = await LineItem.findAll({
-    //   where: {
-    //     orderId: order.id,
-    //   },
-    //   // include: [
-    //   //   {
-    //   //     model: BubbleTea,
-    //   //   },
-    //   // ],
-    // });
+// User.getOrders = async function () {
+//   console.log("getOrders: ", new this());
+//   const orders = await Order.findAll({
+//     where: {
+//       userId: this.id,
+//       status: "Pending",
+//     },
+//   });
+//   if (!orders) {
+//     return "You have not ordered anything yet! Start shopping!";
+//   } else {
+//     // const lineItem = await LineItem.findAll({
+//     //   where: {
+//     //     orderId: order.id,
+//     //   },
+//     //   // include: [
+//     //   //   {
+//     //   //     model: BubbleTea,
+//     //   //   },
+//     //   // ],
+//     // });
 
-    const orderWithItems = orders.forEach((order) => {
-      return LineItem.findAll({ where: { orderId: order.id } });
-      //   // include: [{ model: LineItem, include: [BubbleTea] }],
-    });
+//     const orderWithItems = orders.forEach((order) => {
+//       return LineItem.findAll({ where: { orderId: order.id } });
+//       //   // include: [{ model: LineItem, include: [BubbleTea] }],
+//     });
 
-    // const orderWithItems = orders.forEach((order) => {
-    //   return Order.findByPk(order.id, {
-    //     include: [{ model: LineItem, include: [BubbleTea] }],
-    //   });
-    // });
-    console.log("pending orders: ", orderWithItems);
-    return orderWithItems;
-  }
-};
+//     // const orderWithItems = orders.forEach((order) => {
+//     //   return Order.findByPk(order.id, {
+//     //     include: [{ model: LineItem, include: [BubbleTea] }],
+//     //   });
+//     // });
+//     console.log("pending orders: ", orderWithItems);
+//     return orderWithItems;
+//   }
+// };

@@ -9,19 +9,11 @@ import {
 } from "../store/lineItems";
 
 export class Cart extends React.Component {
-  constructor() {
-    super();
-    this.handleClick = this.handleClick.bind(this);
-  }
+  // constructor() {
+  //   super();
+  // }
   componentDidMount() {
     this.props.getCartInfo();
-  }
-
-  handleClick(item) {
-    console.log(this.props);
-    this.props.increaseQuantity(item);
-    this.props.getCartInfo();
-    this.setState();
   }
 
   render() {
@@ -30,7 +22,7 @@ export class Cart extends React.Component {
     return (
       <div>
         <h1>Shopping Cart:</h1>
-        {this.props.cart.length !== 0 ? (
+        {this.props.cart ? (
           <div>
             <h2>
               {this.props.cart.map((cartItem) => {

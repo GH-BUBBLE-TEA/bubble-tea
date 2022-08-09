@@ -13,38 +13,13 @@ router.get("/", async (req, res, next) => {
         status: "Pending",
       },
     });
-    if (!order) {
-      res.send("there is no item in the cart");
-    } else {
+    if (order) {
       const lineItems = await LineItem.findAll({
         where: {
           orderId: order.id,
         },
-        // include: [
-        //   {
-        //     model: BubbleTea,
-        //   },
-        // ],
       });
       res.status(200).send(lineItems);
-      // console.log("lineItem: ", lineItems);
-      // const cart = async () => {
-      //   return Promise.all(
-      //     lineItems.map(async (lineItem) => {
-      //       await BubbleTea.findOne({
-      //         where: {
-      //           id: lineItem.dataValues.bubbleTeaId,
-      //         },
-      //       });
-      //     })
-      //   );
-      // };
-      // const carItems = await cart();
-      // console.log("cart: ", carItems);
-      // // const cart = Order.findByPk(order.id, {
-      // //   include: [{ model: LineItem, include: [BubbleTea] }],
-      // // });
-      // res.status(200).send(carItems);
     }
   } catch (err) {
     next(err);
