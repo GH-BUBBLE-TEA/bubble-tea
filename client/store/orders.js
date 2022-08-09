@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const GOT_ORDERS = "GOT_ORDERS";
+const CHECKOUT_ORDER = "CHECKOUT_ORDER";
 // const CREATE_BUBBLETEA = "CREATE_BUBBLETEA";
 // const UPDATE_BUBBLETEA = "UPDATE_BUBBLETEA";
 // const DELETE_BUBBLETEA = "DELETE_BUBBLETEA";
@@ -9,6 +10,13 @@ const gotOrders = (orders) => {
   return {
     type: GOT_ORDERS,
     orders,
+  };
+};
+
+const checkedOut = (order) => {
+  return {
+    type: CHECKOUT_ORDER,
+    order,
   };
 };
 
@@ -42,6 +50,18 @@ export const getOrders = (userId) => {
         },
       });
       dispatch(gotOrders(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const checkout = (orderId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`/api/orders/${orderId}`);
+      console.log("DATA IN STORE: ", data);
+      dispatch(checkedOut(data));
     } catch (err) {
       console.log(err);
     }
@@ -91,6 +111,9 @@ export default function ordersReducer(state = [], action) {
   switch (action.type) {
     case GOT_ORDERS:
       return action.orders;
+    case CHECKOUT_ORDER:
+      // return [...state, action.order];
+      return action.order;
     // case CREATE_BUBBLETEA:
     //   return [...state, action.bubbleTea];
     // case UPDATE_BUBBLETEA:

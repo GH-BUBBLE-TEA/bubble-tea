@@ -11,6 +11,7 @@ import CreateBubbleTea from "./components/CreateBubbleTea";
 import EditBubbleTea from "./components/EditBubbleTea";
 import EditUser from "./components/EditUser";
 import UserOrdersPage from "./components/UserOrdersPage";
+// import CheckOut from "./components/CheckOut.JS";
 
 /**
  * COMPONENT
@@ -45,6 +46,7 @@ class Routes extends Component {
 
               <Route exact path="/cart" component={Cart} />
               <Route path="/orders" component={UserOrdersPage} />
+              {/* <Route exact path="/checkout" component={CheckOut} /> */}
             </Switch>
           </div>
         ) : (

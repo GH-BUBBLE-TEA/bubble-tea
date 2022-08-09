@@ -8,6 +8,7 @@ import {
   decreaseQuantity,
 } from "../store/lineItems";
 import { Link } from "react-router-dom";
+import { checkout } from "../store/orders";
 
 export class Cart extends React.Component {
   // constructor() {
@@ -17,9 +18,15 @@ export class Cart extends React.Component {
     this.props.getCartInfo();
   }
 
+  checkout(orderId) {
+    this.props.checkout(orderId); //thunk
+    this.props.getCartInfo();
+  }
+
   render() {
     let finalCost = 0;
     let totalItems = 0;
+    console.log("this.props.cart: ", this.props.cart);
     return (
       <div>
         <h1>Shopping Cart:</h1>
@@ -60,7 +67,11 @@ export class Cart extends React.Component {
             </h2>
             <h3>Total items in the cart: {totalItems} </h3>
             <h4>Grand Total: ${finalCost}</h4>
-            <button>Check out</button>
+            {/* <Link to="/checkout"> */}
+            <button onClick={() => this.checkout(this.props.cart[0].orderId)}>
+              Check out
+            </button>
+            {/* </Link> */}
           </div>
         ) : (
           <h3>There is no item in the cart.</h3>
@@ -82,6 +93,7 @@ const mapDispatchToProps = (dispatch) => ({
   deleteFromCart: (lineItemId) => dispatch(deleteFromCart(lineItemId)),
   increaseQuantity: (item) => dispatch(increaseQuantity(item)),
   decreaseQuantity: (item) => dispatch(decreaseQuantity(item)),
+  checkout: (orderId) => dispatch(checkout(orderId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
