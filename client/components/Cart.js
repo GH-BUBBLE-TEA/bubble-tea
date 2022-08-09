@@ -7,21 +7,14 @@ import {
   increaseQuantity,
   decreaseQuantity,
 } from "../store/lineItems";
+import { Link } from "react-router-dom";
 
 export class Cart extends React.Component {
-  constructor() {
-    super();
-    this.handleClick = this.handleClick.bind(this);
-  }
+  // constructor() {
+  //   super();
+  // }
   componentDidMount() {
     this.props.getCartInfo();
-  }
-
-  handleClick(item) {
-    console.log(this.props);
-    this.props.increaseQuantity(item);
-    this.props.getCartInfo();
-    this.setState();
   }
 
   render() {
@@ -30,7 +23,7 @@ export class Cart extends React.Component {
     return (
       <div>
         <h1>Shopping Cart:</h1>
-        {this.props.cart.length !== 0 ? (
+        {this.props.cart ? (
           <div>
             <h2>
               {this.props.cart.map((cartItem) => {
@@ -38,7 +31,9 @@ export class Cart extends React.Component {
                 totalItems += cartItem.quantity;
                 return (
                   <div key={cartItem.id}>
-                    <h3>- {cartItem.teaName}</h3>
+                    <Link to={`/menu/${cartItem.bubbleTeaId}`}>
+                      <h3>- {cartItem.teaName}</h3>
+                    </Link>
                     <img src={cartItem.imageURL} />
                     <h4>
                       <button
