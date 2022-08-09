@@ -7,6 +7,7 @@ import {
   increaseQuantity,
   decreaseQuantity,
 } from "../store/lineItems";
+import { Link } from "react-router-dom";
 
 export class Cart extends React.Component {
   // constructor() {
@@ -30,7 +31,9 @@ export class Cart extends React.Component {
                 totalItems += cartItem.quantity;
                 return (
                   <div key={cartItem.id}>
-                    <h3>- {cartItem.teaName}</h3>
+                    <Link to={`/menu/${cartItem.bubbleTeaId}`}>
+                      <h3>- {cartItem.teaName}</h3>
+                    </Link>
                     <img src={cartItem.imageURL} />
                     <h4>
                       <button
