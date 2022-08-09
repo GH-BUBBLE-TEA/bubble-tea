@@ -101,6 +101,9 @@ export const increaseQuantity = (item) => {
 export const decreaseQuantity = (item) => {
   return async (dispatch) => {
     try {
+      // if (item.quantity <= 0) {
+      //   deleteFromCart(item.id);
+
       const { data } = await axios.put(`/api/lineItems/${item.id}`, {
         quantity: item.quantity - 1,
       });
