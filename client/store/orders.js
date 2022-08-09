@@ -36,7 +36,7 @@ export const getOrders = (userId) => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem("token");
-      const { data } = await axios.get(`/api/users/orders/${userId}`, {
+      const { data } = await axios.get(`/api/orders/${userId}`, {
         headers: {
           authorization: token,
         },

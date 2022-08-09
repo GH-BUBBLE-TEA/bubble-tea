@@ -38,10 +38,12 @@ export class SinglePage extends React.Component {
           <div>
             {bubbleTea.stock > 0 ? (
               <div>
-                Available{" "}
-                <button onClick={() => this.props.addToCart(bubbleTea)}>
-                  Add to Cart
-                </button>
+                Available stock: {bubbleTea.stock}
+                <div>
+                  <button onClick={() => this.props.addToCart(bubbleTea)}>
+                    Add to Cart
+                  </button>
+                </div>
               </div>
             ) : (
               <div>Sorry, this product is currently not available</div>
