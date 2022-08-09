@@ -87,11 +87,16 @@ export const deleteFromCart = (id) => {
 export const increaseQuantity = (item) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/lineItems/${item.id}`, {
-        quantity: item.quantity + 1,
-      });
-
-      dispatch(increasedQuantity(data));
+      const { data: bubbleTeaData } = await axios.get(
+        `/api/bubbleTeas/${item.bubbleTeaId}`
+      );
+      const stockLevel = bubbleTeaData.stock;
+      if (item.quantity + 1 <= stockLevel) {
+        const { data } = await axios.put(`/api/lineItems/${item.id}`, {
+          quantity: item.quantity + 1,
+        });
+        dispatch(increasedQuantity(data));
+      }
     } catch (err) {
       console.log(err);
     }
