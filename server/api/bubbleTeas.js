@@ -4,6 +4,7 @@ const {
 } = require("../db");
 module.exports = router;
 const { Op } = require("sequelize");
+const LineItem = require("../db/models/LineItem");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -35,6 +36,17 @@ router.put("/:id", async (req, res, next) => {
     next(error);
   }
 });
+// router.put("/updateStock/:id", async (req, res, next) => {
+//   try {
+//     const bubbleTea = await BubbleTea.findByPk(req.params.id);
+//     const updateStock = await bubbleTea.update({
+//       stock: req.body.updatedStock,
+//     });
+//     res.send(updateStock);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 router.get("/:id", async (req, res, next) => {
   try {
