@@ -17,7 +17,7 @@ export class SinglePage extends React.Component {
     return (
       <div>
         <main>
-          <h1>{bubbleTea.teaName}</h1>
+          <h2 class="large-page-name">{bubbleTea.teaName}</h2>
           {this.props.isAdmin ? (
             <div>
               <Link to={`/menu/edit/${bubbleTea.id}`}>
@@ -32,7 +32,7 @@ export class SinglePage extends React.Component {
             ""
           )}
 
-          <img src={bubbleTea.imageURL} />
+          <img class="single-image" src={bubbleTea.imageURL} />
           <h3>${bubbleTea.defaultPrice}</h3>
           <h4>{bubbleTea.description}</h4>
           <div>
