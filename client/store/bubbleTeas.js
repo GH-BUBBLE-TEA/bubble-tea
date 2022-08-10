@@ -71,8 +71,13 @@ export const createBubbleTea = (bubbleTea, history) => {
 export const deleteBubbleTea = (id, history) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`/api/bubbleTeas/${id}`);
-      dispatch(deletedBubbletTea(data));
+      const token = window.localStorage.getItem("token");
+      const { data } = await axios.delete(`/api/bubbleTeas/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
+      dispatch(deletedBubbleTea(data));
       history.push("/menu");
     } catch (err) {
       console.log(err);
@@ -83,9 +88,15 @@ export const deleteBubbleTea = (id, history) => {
 export const updateBubbleTea = (singleBubbleTea, history) => {
   return async (dispatch) => {
     try {
+      const token = window.localStorage.getItem("token");
       const { data } = await axios.put(
         `/api/bubbleTeas/${singleBubbleTea.id}`,
-        singleBubbleTea
+        singleBubbleTea,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
       );
       dispatch(updatedBubbleTea(data));
       history.push(`/menu/${singleBubbleTea.id}`);
@@ -98,6 +109,7 @@ export const updateBubbleTea = (singleBubbleTea, history) => {
 export const updateStock = (cart) => {
   return async (dispatch) => {
     try {
+      const token = window.localStorage.getItem("token");
       const cartItems = cart.map(async (bubbleTea) => {
         const { data: singleBubbleTea } = await axios.get(
           `/api/bubbleTeas/${bubbleTea.bubbleTeaId}`
@@ -107,6 +119,11 @@ export const updateStock = (cart) => {
           `/api/bubbleTeas/${bubbleTea.bubbleTeaId}`,
           {
             stock: stockLevel - bubbleTea.quantity,
+          },
+          {
+            headers: {
+              authorization: token,
+            },
           }
         );
         return dispatch(updatedBubbleTea(data));

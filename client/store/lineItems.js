@@ -3,8 +3,7 @@ import axios from "axios";
 const GOT_CART = "GOT_CART";
 const ADD_CART = "ADD_CART";
 const DELETE_ITEM = "DELETE_ITEM";
-const INCREASE_QUANTITY = "INCREASE_QUANTITY";
-const DECREASE_QUANTITY = "DECREASE_QUANTITY";
+const UPDATE_QUANTITY = "UPDATE_QUANTITY";
 
 const gotCartInfo = (items) => {
   return {
@@ -27,16 +26,9 @@ const deletedFromCart = (item) => {
   };
 };
 
-const increasedQuantity = (item) => {
+const updatedQuantity = (item) => {
   return {
-    type: INCREASE_QUANTITY,
-    item,
-  };
-};
-
-const decreasedQuantity = (item) => {
-  return {
-    type: DECREASE_QUANTITY,
+    type: UPDATE_QUANTITY,
     item,
   };
 };
@@ -76,7 +68,12 @@ export const addToCart = (bubbleTea) => {
 export const deleteFromCart = (id) => {
   return async (dispatch) => {
     try {
-      const { data: lineItem } = await axios.delete(`/api/lineItems/${id}`);
+      const token = window.localStorage.getItem("token");
+      const { data: lineItem } = await axios.delete(`/api/lineItems/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(deletedFromCart(lineItem));
     } catch (err) {
       console.log(err);
@@ -84,42 +81,16 @@ export const deleteFromCart = (id) => {
   };
 };
 
-export const increaseQuantity = (item) => {
+export const updateQuantity = (item) => {
   return async (dispatch) => {
     try {
-      const { data: bubbleTeaData } = await axios.get(
-        `/api/bubbleTeas/${item.bubbleTeaId}`
-      );
-      const stockLevel = bubbleTeaData.stock;
-      if (item.quantity + 1 <= stockLevel) {
-        const { data } = await axios.put(`/api/lineItems/${item.id}`, {
-          quantity: item.quantity + 1,
-        });
-        dispatch(increasedQuantity(data));
-      } else {
-        alert("Sorry, there is no more product left.");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-};
-
-export const decreaseQuantity = (item) => {
-  return async (dispatch) => {
-    try {
-      if ((item.quantity = 1)) {
-        const { data: lineItem } = await axios.delete(
-          `/api/lineItems/${item.id}`
-        );
-        dispatch(deletedFromCart(lineItem));
-        return;
-      } else {
-        const { data } = await axios.put(`/api/lineItems/${item.id}`, {
-          quantity: item.quantity - 1,
-        });
-        dispatch(decreasedQuantity(data));
-      }
+      const token = window.localStorage.getItem("token");
+      const { data } = await axios.put(`/api/lineItems/${item.id}`, item, {
+        headers: {
+          authorization: token,
+        },
+      });
+      dispatch(updatedQuantity(data));
     } catch (err) {
       console.log(err);
     }
@@ -136,13 +107,7 @@ export default function cartReducer(state = [], action) {
       return state.filter(
         (item) => item.bubbleTeaId !== action.item.bubbleTeaId
       );
-    case INCREASE_QUANTITY:
-      return state.map((item) =>
-        item.bubbleTeaId === action.item.bubbleTeaId
-          ? { ...item, quantity: action.item.quantity }
-          : item
-      );
-    case DECREASE_QUANTITY:
+    case UPDATE_QUANTITY:
       return state.map((item) =>
         item.bubbleTeaId === action.item.bubbleTeaId
           ? { ...item, quantity: action.item.quantity }

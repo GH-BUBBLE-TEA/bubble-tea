@@ -2,11 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { getCartInfo } from "../store/lineItems";
 import { getSingleBubbleTea } from "../store/singleBubbleTea";
-import {
-  deleteFromCart,
-  increaseQuantity,
-  decreaseQuantity,
-} from "../store/lineItems";
+import { deleteFromCart, updateQuantity } from "../store/lineItems";
 import { Link } from "react-router-dom";
 import { checkout } from "../store/orders";
 import { updateStock } from "../store/bubbleTeas";
@@ -18,7 +14,6 @@ export class Cart extends React.Component {
   componentDidMount() {
     this.props.getCartInfo();
   }
-
 
   checkout(orderId, cart) {
     console.log("CART:", cart);
@@ -49,13 +44,23 @@ export class Cart extends React.Component {
                     <img class="cart-img" src={cartItem.imageURL} />
                     <h5>
                       <button
-                        onClick={() => this.props.decreaseQuantity(cartItem)}
+                        onClick={() =>
+                          this.props.updateQuantity({
+                            ...cartItem,
+                            quantity: cartItem.quantity - 1,
+                          })
+                        }
                       >
                         -
                       </button>{" "}
                       Quantity: {cartItem.quantity}
                       <button
-                        onClick={() => this.props.increaseQuantity(cartItem)}
+                        onClick={() =>
+                          this.props.updateQuantity({
+                            ...cartItem,
+                            quantity: cartItem.quantity + 1,
+                          })
+                        }
                       >
                         +
                       </button>
@@ -74,11 +79,9 @@ export class Cart extends React.Component {
             <h4>Grand Total: ${finalCost}</h4>
             {/* <Link to="/checkout"> */}
             <button
-
               onClick={() =>
                 this.checkout(this.props.cart[0].orderId, this.props.cart)
               }
-
             >
               Check out
             </button>
@@ -103,12 +106,10 @@ const mapDispatchToProps = (dispatch, { history }) => ({
   getCartInfo: () => dispatch(getCartInfo()),
   getSingleBubbleTea: (id) => dispatch(getSingleBubbleTea(id)),
   deleteFromCart: (lineItemId) => dispatch(deleteFromCart(lineItemId)),
-  increaseQuantity: (item) => dispatch(increaseQuantity(item)),
-  decreaseQuantity: (item) => dispatch(decreaseQuantity(item)),
+  updateQuantity: (item) => dispatch(updateQuantity(item)),
 
   checkout: (orderId) => dispatch(checkout(orderId)),
   updateStock: (cart) => dispatch(updateStock(cart)),
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
