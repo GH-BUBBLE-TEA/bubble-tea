@@ -67,6 +67,7 @@ export const addToCart = (bubbleTea) => {
         },
       });
       dispatch(addedToCart(data));
+      alert("Added to cart successfully");
     } catch (err) {
       console.log(err);
     }

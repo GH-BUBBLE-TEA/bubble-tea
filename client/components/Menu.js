@@ -73,7 +73,7 @@ export class Menu extends React.Component {
               <div key={bubbleTea.id}>
                 <div>
                   <Link to={`/menu/${bubbleTea.id}`}>
-                    <img class="menu-image" src={bubbleTea.imageURL} />
+                    <img className="menu-image" src={bubbleTea.imageURL} />
                     <h3>{bubbleTea.teaName}</h3>
                   </Link>
                   <p>Price: ${bubbleTea.defaultPrice}</p>
