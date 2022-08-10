@@ -2,6 +2,7 @@ import axios from "axios";
 import { getCartInfo } from "./lineItems";
 
 const GOT_ORDERS = "GOT_ORDERS";
+const GOT_ORDER = "GOT_ORDER";
 const CHECKOUT_ORDER = "CHECKOUT_ORDER";
 // const CREATE_BUBBLETEA = "CREATE_BUBBLETEA";
 // const UPDATE_BUBBLETEA = "UPDATE_BUBBLETEA";
@@ -14,6 +15,12 @@ const gotOrders = (orders) => {
   };
 };
 
+const gotOrder = (order) => {
+  return {
+    type: GOT_ORDER,
+    order,
+  };
+};
 const checkedOut = (order) => {
   return {
     type: CHECKOUT_ORDER,
@@ -57,6 +64,21 @@ export const getOrders = (userId) => {
   };
 };
 
+export const getOrder = (userId, orderId) => {
+  return async (dispatch) => {
+    try {
+      const token = window.localStorage.getItem("token");
+      const { data } = await axios.get(`/api/orders/${userId}/${orderId}`, {
+        headers: {
+          authorization: token,
+        },
+      });
+      dispatch(gotOrder(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
 export const checkout = (orderId, history) => {
   return async (dispatch) => {
     try {
@@ -117,6 +139,8 @@ export default function ordersReducer(state = [], action) {
       return action.orders;
     case CHECKOUT_ORDER:
       // return [...state, action.order];
+      return action.order;
+    case GOT_ORDER:
       return action.order;
     // return [];
     // case CREATE_BUBBLETEA:

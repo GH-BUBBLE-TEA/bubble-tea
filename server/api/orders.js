@@ -2,40 +2,37 @@ const router = require("express").Router();
 const {
   models: { LineItem, BubbleTea, Order },
 } = require("../db");
+const { Op } = require("sequelize");
 module.exports = router;
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:userId", async (req, res, next) => {
   try {
     const ordersList = await Order.findAll({
-      where: { userId: +req.params.id },
+      where: {
+        userId: +req.params.userId,
+        status: {
+          [Op.ne]: "Pending",
+        },
+      },
     });
-    //const orderId = ordersList[0].id;
-    console.log("orders in API: ", ordersList);
-    // const result = await Promise.all(
-    //   ordersList.map(async (order) => {
-    //     await LineItem.findAll({
-    //       where: { orderId: order.id },
-    //     });
-    //   })
-    // );
-
-    // const resultArray = [];
-    const result = await LineItem.findAll({
-      where: { orderId: ordersList[0].id },
+    const result = ordersList.map((order) => {
+      return {
+        orderId: order.id,
+        status: order.status,
+      };
     });
-    // for (let i = 0; i < ordersList.length - 1; i++) {
-    //   const orderId = ordersList[i].id;
-    //   console.log("orderId: ", orderId);
-
-    //   const result = await LineItem.findAll({
-    //     where: { orderId: orderId },
-    //   });
-    //   resultArray.push([orderId, result]);
-    // }
-
-    // console.log("result: ", resultArray);
-    // res.json(resultArray);
     res.json(result);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get("/:userId/:orderId", async (req, res, next) => {
+  try {
+    const lineItems = await LineItem.findAll({
+      where: { orderId: +req.params.orderId },
+    });
+    res.json(lineItems);
   } catch (e) {
     next(e);
   }
