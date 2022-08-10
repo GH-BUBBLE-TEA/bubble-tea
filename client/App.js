@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 
 const App = () => {
   return (
-    <div class="app-div">
+    <div className="app-div">
       <Navbar />
       <Routes />
     </div>

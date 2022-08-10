@@ -21,7 +21,9 @@ export class Home extends React.Component {
 
     return (
       <div>
-        <h2 class="large-page-name">Welcome, {this.props.user.username}!</h2>
+        <h2 className="large-page-name">
+          Welcome, {this.props.user.username}!
+        </h2>
         <div>
           {isAdmin ? (
             <React.Fragment>
