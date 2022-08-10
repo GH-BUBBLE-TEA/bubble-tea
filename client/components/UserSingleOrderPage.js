@@ -11,8 +11,6 @@ class UserSingleOrderPage extends React.Component {
   render() {
     let totalPrice = 0;
     let totalItems = 0;
-    console.log("this.props.order", this.props.order);
-    // console.log("this.props.orderId: ", this.props.orders[0]);
     return (
       <React.Fragment>
         <div>Orders Number: {this.props.match.params.id}</div>
@@ -44,7 +42,6 @@ class UserSingleOrderPage extends React.Component {
 const mapState = (state) => ({
   order: state.orders,
   id: state.auth.id,
-  //   isAdmin: !!state.auth.isAdmin,
 });
 
 const mapDispatch = (dispatch) => ({
