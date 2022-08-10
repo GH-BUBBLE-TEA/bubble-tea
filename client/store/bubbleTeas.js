@@ -4,6 +4,7 @@ const GOT_BUBBLETEAS = "GOT_BUBBLETEAS";
 const CREATE_BUBBLETEA = "CREATE_BUBBLETEA";
 const UPDATE_BUBBLETEA = "UPDATE_BUBBLETEA";
 const DELETE_BUBBLETEA = "DELETE_BUBBLETEA";
+const UPDATE_STOCK = "UPDATE_STOCK";
 
 const gotBubbleTeas = (bubbleTeas) => {
   return {
@@ -25,10 +26,17 @@ const updatedBubbleTea = (singleBubbleTea) => {
   };
 };
 
-const deletedBubbletTea = (singleBubbleTea) => {
+const deletedBubbleTea = (singleBubbleTea) => {
   return {
     type: DELETE_BUBBLETEA,
     singleBubbleTea,
+  };
+};
+
+const updatedBubbleTeaStock = (item) => {
+  return {
+    type: UPDATE_STOCK,
+    item,
   };
 };
 
@@ -76,6 +84,28 @@ export const updateBubbleTea = (singleBubbleTea, history) => {
       );
       dispatch(updatedBubbleTea(data));
       history.push(`/menu/${singleBubbleTea.id}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const updateStock = (cart) => {
+  return async (dispatch) => {
+    try {
+      const cartItems = cart.map(async (bubbleTea) => {
+        const { data: singleBubbleTea } = await axios.get(
+          `/api/bubbleTeas/${bubbleTea.bubbleTeaId}`
+        );
+        const stockLevel = singleBubbleTea.stock;
+        const { data } = await axios.put(
+          `/api/bubbleTeas/${bubbleTea.bubbleTeaId}`,
+          {
+            stock: stockLevel - bubbleTea.quantity,
+          }
+        );
+        return dispatch(updatedBubbleTea(data));
+      });
     } catch (err) {
       console.log(err);
     }

@@ -9,6 +9,7 @@ import {
 } from "../store/lineItems";
 import { Link } from "react-router-dom";
 import { checkout } from "../store/orders";
+import { updateStock } from "../store/bubbleTeas";
 
 export class Cart extends React.Component {
   // constructor() {
@@ -18,15 +19,19 @@ export class Cart extends React.Component {
     this.props.getCartInfo();
   }
 
-  // checkout(orderId) {
-  //   this.props.checkout(orderId); //thunk
-  //   this.props.getCartInfo();
-  // }
+
+  checkout(orderId, cart) {
+    console.log("CART:", cart);
+    this.props.checkout(orderId); //thunk
+    this.props.getCartInfo();
+    this.props.updateStock(cart);
+  }
 
   render() {
     let finalCost = 0;
     let totalItems = 0;
     console.log("this.props.cart: ", this.props.cart);
+    console.log("BUBBLE TEA CART: ", this.props.bubbleTea);
     return (
       <div>
         <h1>Shopping Cart:</h1>
@@ -69,7 +74,11 @@ export class Cart extends React.Component {
             <h4>Grand Total: ${finalCost}</h4>
             {/* <Link to="/checkout"> */}
             <button
-              onClick={() => this.props.checkout(this.props.cart[0].orderId)}
+
+              onClick={() =>
+                this.checkout(this.props.cart[0].orderId, this.props.cart)
+              }
+
             >
               Check out
             </button>
@@ -86,6 +95,7 @@ export class Cart extends React.Component {
 const mapStateToProps = (state) => {
   return {
     cart: state.cart,
+    bubbleTea: state.singleBubbleTea,
   };
 };
 
@@ -95,7 +105,10 @@ const mapDispatchToProps = (dispatch, { history }) => ({
   deleteFromCart: (lineItemId) => dispatch(deleteFromCart(lineItemId)),
   increaseQuantity: (item) => dispatch(increaseQuantity(item)),
   decreaseQuantity: (item) => dispatch(decreaseQuantity(item)),
-  checkout: (orderId) => dispatch(checkout(orderId, history)),
+
+  checkout: (orderId) => dispatch(checkout(orderId)),
+  updateStock: (cart) => dispatch(updateStock(cart)),
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

@@ -63,6 +63,9 @@ export const checkout = (orderId, history) => {
       const { data } = await axios.put(`/api/orders/${orderId}`);
       console.log("DATA IN STORE: ", data);
 
+      console.log("INSIDE CHECKOUT ORDER ID: ", orderId);
+
+
       dispatch(checkedOut(data));
       dispatch(getCartInfo());
       history.push("/cart");
