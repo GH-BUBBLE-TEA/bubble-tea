@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCartInfo } from "./lineItems";
 
 const GOT_ORDERS = "GOT_ORDERS";
 const CHECKOUT_ORDER = "CHECKOUT_ORDER";
@@ -56,14 +57,18 @@ export const getOrders = (userId) => {
   };
 };
 
-export const checkout = (orderId) => {
+export const checkout = (orderId, history) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.put(`/api/orders/${orderId}`);
       console.log("DATA IN STORE: ", data);
+
       console.log("INSIDE CHECKOUT ORDER ID: ", orderId);
 
+
       dispatch(checkedOut(data));
+      dispatch(getCartInfo());
+      history.push("/cart");
     } catch (err) {
       console.log(err);
     }
@@ -116,6 +121,7 @@ export default function ordersReducer(state = [], action) {
     case CHECKOUT_ORDER:
       // return [...state, action.order];
       return action.order;
+    // return [];
     // case CREATE_BUBBLETEA:
     //   return [...state, action.bubbleTea];
     // case UPDATE_BUBBLETEA:

@@ -96,6 +96,8 @@ export const increaseQuantity = (item) => {
           quantity: item.quantity + 1,
         });
         dispatch(increasedQuantity(data));
+      } else {
+        alert("Sorry, there is no more product left.");
       }
     } catch (err) {
       console.log(err);

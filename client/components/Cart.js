@@ -19,6 +19,7 @@ export class Cart extends React.Component {
     this.props.getCartInfo();
   }
 
+
   checkout(orderId, cart) {
     console.log("CART:", cart);
     this.props.checkout(orderId); //thunk
@@ -73,9 +74,11 @@ export class Cart extends React.Component {
             <h4>Grand Total: ${finalCost}</h4>
             {/* <Link to="/checkout"> */}
             <button
+
               onClick={() =>
                 this.checkout(this.props.cart[0].orderId, this.props.cart)
               }
+
             >
               Check out
             </button>
@@ -96,14 +99,16 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, { history }) => ({
   getCartInfo: () => dispatch(getCartInfo()),
   getSingleBubbleTea: (id) => dispatch(getSingleBubbleTea(id)),
   deleteFromCart: (lineItemId) => dispatch(deleteFromCart(lineItemId)),
   increaseQuantity: (item) => dispatch(increaseQuantity(item)),
   decreaseQuantity: (item) => dispatch(decreaseQuantity(item)),
+
   checkout: (orderId) => dispatch(checkout(orderId)),
   updateStock: (cart) => dispatch(updateStock(cart)),
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
