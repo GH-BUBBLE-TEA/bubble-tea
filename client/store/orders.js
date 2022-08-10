@@ -69,10 +69,6 @@ export const checkout = (orderId, history) => {
           },
         }
       );
-      console.log("DATA IN STORE: ", data);
-
-      console.log("INSIDE CHECKOUT ORDER ID: ", orderId);
-
       dispatch(checkedOut(data));
       dispatch(getCartInfo());
       history.push("/cart");
