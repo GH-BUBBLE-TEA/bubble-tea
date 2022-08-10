@@ -5,6 +5,7 @@ const {
 module.exports = router;
 const { Op } = require("sequelize");
 const LineItem = require("../db/models/LineItem");
+const User = require("../db/models/User");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -21,8 +22,12 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    console.log("REQ.BODY: ", req.body);
-    res.status(201).json(await BubbleTea.create(req.body));
+    const user = await User.findByToken(req.headers.authorization);
+    if (user.isAdmin) {
+      res.status(201).json(await BubbleTea.create(req.body));
+    } else {
+      alert("Sorry, this is only for administrator user!");
+    }
   } catch (err) {
     next(err);
   }
