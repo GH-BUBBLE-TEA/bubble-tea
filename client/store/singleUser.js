@@ -21,7 +21,13 @@ export const _setUser = (user) => {
 export const getSingleUser = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/users/${id}`);
+      const token = window.localStorage.getItem("token");
+      const { data } = await axios.get(`/api/users/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
+
       dispatch(gotSingleUser(data));
     } catch (err) {
       console.log(err);
