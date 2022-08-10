@@ -25,7 +25,7 @@ class UserSingleOrderPage extends React.Component {
               <h5>Quantity: {orderItem.quantity}</h5>
               <h5>Price: ${orderItem.itemPrice}</h5>
               <h5>
-                Total Item Price: {orderItem.quantity * orderItem.itemPrice}
+                Total Item Price: ${orderItem.quantity * orderItem.itemPrice}
               </h5>
               <button>Leave Reviews</button>
             </div>
