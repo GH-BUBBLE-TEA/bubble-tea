@@ -80,6 +80,7 @@ router.post("/", async (req, res, next) => {
           itemPrice: bubbleTea.defaultPrice,
           quantity: 1,
           teaName: bubbleTea.teaName,
+          imageURL: bubbleTea.imageURL
         });
         res.status(201).json(newLineItems);
       }
@@ -94,6 +95,7 @@ router.post("/", async (req, res, next) => {
         itemPrice: bubbleTea.defaultPrice,
         quantity: 1,
         teaName: bubbleTea.teaName,
+        imageURL: bubbleTea.imageURL
       });
       res.status(201).json(newLineItems);
     }

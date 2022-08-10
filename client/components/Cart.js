@@ -34,7 +34,7 @@ export class Cart extends React.Component {
     console.log("BUBBLE TEA CART: ", this.props.bubbleTea);
     return (
       <div>
-        <h1>Shopping Cart:</h1>
+        <h1 class="large-page-name">SHOPPING CART:</h1>
         {this.props.cart ? (
           <div>
             <h2>
@@ -44,10 +44,10 @@ export class Cart extends React.Component {
                 return (
                   <div key={cartItem.id}>
                     <Link to={`/menu/${cartItem.bubbleTeaId}`}>
-                      <h3>- {cartItem.teaName}</h3>
+                      <h4>- {cartItem.teaName}</h4>
                     </Link>
-                    <img src={cartItem.imageURL} />
-                    <h4>
+                    <img class="cart-img" src={cartItem.imageURL} />
+                    <h5>
                       <button
                         onClick={() => this.props.decreaseQuantity(cartItem)}
                       >
@@ -65,7 +65,7 @@ export class Cart extends React.Component {
                       >
                         Delete
                       </button>
-                    </h4>
+                    </h5>
                   </div>
                 );
               })}

@@ -1,9 +1,21 @@
+html {
+  background-color: rgb(34, 34, 34);
+}
+
+div {
+  color:rgb(161, 161, 161);
+}
+
 body {
   font-family: sans-serif;
 }
 
 a {
   text-decoration: none;
+}
+
+a:link, a:visited {
+color:rgb(255, 255, 255);
 }
 
 label {
@@ -13,6 +25,7 @@ label {
 nav a {
   display: inline-block;
   margin: 1em;
+  color: rgb(161, 161, 161);
 }
 
 form div {
@@ -27,4 +40,44 @@ form div {
 
 .hide {
   display: none;
+}
+
+.menu-image {
+  height: 200px;
+  width: auto;
+}
+
+.single-image {
+  height: 400px;
+  width: auto;
+}
+
+.large-page-name {
+  color:rgb(255, 255, 255);
+}
+
+.cart-img {
+  height: 80px;
+  width: auto;
+}
+
+#logo-img {
+  height: 100px;
+  width: auto;
+}
+
+
+button {
+  background-color: rgb(82, 82, 82);
+  color: white;
+  border: none;
+  padding: 5px;
+  text-align: center;
+  font-size: large;
+  border-radius: 8px;
+}
+
+button:hover {
+  background-color: rgb(130, 130, 130);
+  transition: .7s;
 }
