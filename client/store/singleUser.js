@@ -27,7 +27,6 @@ export const getSingleUser = (id) => {
           authorization: token,
         },
       });
-
       dispatch(gotSingleUser(data));
     } catch (err) {
       console.log(err);
@@ -39,7 +38,6 @@ export default function userReducer(state = {}, action) {
   switch (action.type) {
     case GOT_USER:
       return action.user;
-
     case SET_USER:
       return action.user;
     default:
