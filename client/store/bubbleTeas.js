@@ -54,7 +54,12 @@ export const getBubbleTeas = () => {
 export const createBubbleTea = (bubbleTea, history) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post("/api/bubbleTeas", bubbleTea);
+      const token = window.localStorage.getItem("token");
+      const { data } = await axios.post("/api/bubbleTeas", bubbleTea, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(createdBubbleTea(data));
       history.push("/menu");
     } catch (err) {
