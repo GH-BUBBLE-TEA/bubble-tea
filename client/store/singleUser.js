@@ -21,7 +21,12 @@ export const _setUser = (user) => {
 export const getSingleUser = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/users/${id}`);
+      const token = window.localStorage.getItem("token");
+      const { data } = await axios.get(`/api/users/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(gotSingleUser(data));
     } catch (err) {
       console.log(err);
@@ -33,7 +38,6 @@ export default function userReducer(state = {}, action) {
   switch (action.type) {
     case GOT_USER:
       return action.user;
-
     case SET_USER:
       return action.user;
     default:

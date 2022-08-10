@@ -35,8 +35,13 @@ router.post("/", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
   try {
-    const bubbleTea = await BubbleTea.findByPk(req.params.id);
-    res.send(await bubbleTea.update(req.body));
+    const user = await User.findByToken(req.headers.authorization);
+    if (user.isAdmin) {
+      const bubbleTea = await BubbleTea.findByPk(req.params.id);
+      res.send(await bubbleTea.update(req.body));
+    } else {
+      alert("Sorry, this is only for administrator user!");
+    }
   } catch (error) {
     next(error);
   }
@@ -53,9 +58,14 @@ router.get("/:id", async (req, res, next) => {
 
 router.delete("/:id", async (req, res, next) => {
   try {
-    const bubbleTea = await BubbleTea.findByPk(req.params.id);
-    await bubbleTea.destroy();
-    res.send(bubbleTea);
+    const user = await User.findByToken(req.headers.authorization);
+    if (user.isAdmin) {
+      const bubbleTea = await BubbleTea.findByPk(req.params.id);
+      await bubbleTea.destroy();
+      res.send(bubbleTea);
+    } else {
+      alert("Sorry! You are unauthorized");
+    }
   } catch (error) {
     next(error);
   }

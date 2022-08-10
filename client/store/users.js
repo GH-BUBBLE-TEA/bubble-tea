@@ -36,7 +36,12 @@ const updatedUser = (user) => {
 export const getUsers = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("/api/users");
+      const token = window.localStorage.getItem("token");
+      const { data } = await axios.get("/api/users", {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(gotUsers(data));
     } catch (err) {
       console.log(err);
@@ -47,7 +52,12 @@ export const getUsers = () => {
 export const deleteUser = (id, history) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`/api/users/${id}`);
+      const token = window.localStorage.getItem("token");
+      const { data } = await axios.delete(`/api/users/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(deletedUser(data));
       history.push("/home");
     } catch (err) {
@@ -59,7 +69,12 @@ export const deleteUser = (id, history) => {
 export const updateAdminStatus = (user, history) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/users/${user.id}`, user);
+      const token = window.localStorage.getItem("token");
+      const { data } = await axios.put(`/api/users/${user.id}`, user, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(updatedAdminStatus(data));
       history.push("/home");
     } catch (err) {
@@ -71,7 +86,12 @@ export const updateAdminStatus = (user, history) => {
 export const updateUser = (user, history) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/users/${user.id}`, user);
+      const token = window.localStorage.getItem("token");
+      const { data } = await axios.put(`/api/users/${user.id}`, user, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(updatedUser(data));
       history.push("/home");
     } catch (err) {
