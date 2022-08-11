@@ -26,54 +26,70 @@ export class Cart extends React.Component {
     console.log("BUBBLE TEA CART: ", this.props.bubbleTea);
     return (
       <div className="cartPage">
-        <h1 className="large-page-name">SHOPPING CART:</h1>
+        <h1 id="large-page-name">SHOPPING CART:</h1>
         {this.props.cart ? (
-          <div>
+          <div className="cart-info-all">
             <h2>
               {this.props.cart.map((cartItem) => {
                 finalCost += cartItem.itemPrice * cartItem.quantity;
                 totalItems += cartItem.quantity;
                 return (
-                  <div key={cartItem.id}>
-                    <Link to={`/menu/${cartItem.bubbleTeaId}`}>
-                      <h4>- {cartItem.teaName}</h4>
-                    </Link>
-                    <img className="cart-img" src={cartItem.imageURL} />
-                    <h5>
-                      <button
-                        onClick={() =>
-                          this.props.updateQuantity({
-                            ...cartItem,
-                            quantity: cartItem.quantity - 1,
-                          })
-                        }
-                      >
-                        -
-                      </button>{" "}
-                      Quantity: {cartItem.quantity}
-                      <button
-                        onClick={() =>
-                          this.props.updateQuantity({
-                            ...cartItem,
-                            quantity: cartItem.quantity + 1,
-                          })
-                        }
-                      >
-                        +
-                      </button>
+                  <div key={cartItem.id} className="cartInfo">
+                    <div className="cart-tea-name">
+                      <Link to={`/menu/${cartItem.bubbleTeaId}`}>
+                        <h4>{cartItem.teaName}</h4>
+                      </Link>
+                    </div>
+                    <div className="cart-img">
+                      <img
+                        className="inside-cart-img"
+                        src={cartItem.imageURL}
+                      />
+                    </div>
+                    <h5 className="cart-quantity">
+                      <div className="quantity-button">
+                        <button
+                          className="cart-button"
+                          onClick={() =>
+                            this.props.updateQuantity({
+                              ...cartItem,
+                              quantity: cartItem.quantity - 1,
+                            })
+                          }
+                        >
+                          -
+                        </button>{" "}
+                        <div className="quantity-text">
+                          Quantity: {cartItem.quantity}
+                        </div>
+                        <button
+                          onClick={() =>
+                            this.props.updateQuantity({
+                              ...cartItem,
+                              quantity: cartItem.quantity + 1,
+                            })
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
                       Total Price: ${cartItem.itemPrice * cartItem.quantity}
-                      <button
-                        onClick={() => this.props.deleteFromCart(cartItem.id)}
-                      >
-                        Delete
-                      </button>
+                      <div className="cart-delete-button">
+                        <button
+                          onClick={() => this.props.deleteFromCart(cartItem.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </h5>
                   </div>
                 );
               })}
             </h2>
             <h3>Total items in the cart: {totalItems} </h3>
-            <h4>Grand Total: ${finalCost}</h4>
+            <div className="grand-total-cart">
+              <h4>Grand Total: ${finalCost}</h4>
+            </div>
             <Link to="/payment">
               <button
                 onClick={() =>

@@ -43,10 +43,8 @@ form div {
 }
 
 .menu-image {
-
   height: 200px;
   width: auto;
-
 }
 
 .single-image {
@@ -59,18 +57,70 @@ form div {
   flex-direction: column;
   align-items: center;
 }
+.cartInfo{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: dotted gray;
+  padding-bottom: 5px;
+  margin: 10px;
+  border-width: 7px;
+}
 
-.large-page-name {
+#large-page-name {
   display: flex;
   color:rgb(255, 255, 255);
+  align-items: center;
+}
+.cart-tea-name{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px;
+}
+.cart-info-all{
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
 .cart-img {
   display: flex;
-  height: 150px;
-  width: auto;
   justify-content: center;
+  align-content: center;
+  /* height: 400px;
+  max-width: 100px; */
+}
+.inside-cart-img{
+    height: 200px;
+  max-width: 150px;
+}
+.cart-button {
+  display: flex;
+  align-content: center;
+} 
+.cart-quantity {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* width: 20em */
+}
+.quantity-button{
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+}
+.quantity-text{
+  padding: 7px
+}
+.cart-delete-button{
+  padding-top: 15px;
+  padding-bottom: 15px
+}
+.grand-total-cart{
+  font-size: 25px;
+  text-decoration: underline;
 }
 
 #logo-img {
@@ -142,7 +192,6 @@ button:hover {
 } */
 
 .bubble-tea1 {
-
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -175,20 +224,16 @@ button:hover {
   padding: 10px;
   margin: 10px
 }
-.commentBox {
-  display: flex;
-  justify-content: center;
-  padding: 30px;
-}
+
 #bubbleTeaDescription{
   display: flex;
   width: 500px;
   font-size: 20px;
   text-align: center;
 }
-#submitCommentButton{
+#create-new-product{
   display: flex;
-  justify-content: flex-end;
-  
+  align-items: center;
+  background-color: azure;
 }
 
