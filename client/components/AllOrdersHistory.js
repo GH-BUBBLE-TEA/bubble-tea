@@ -29,11 +29,7 @@ class AllOrdersHistory extends React.Component {
               {this.props.orders.map((singleOrder, index) => {
                 return (
                   <tr key={singleOrder.id}>
-                    <td>
-                      <Link to={`/orders/edit/${singleOrder.id}`}>
-                        {singleOrder.id}
-                      </Link>
-                    </td>
+                    <td>{singleOrder.id}</td>
 
                     <td>{singleOrder.user.username}</td>
                     <td>{singleOrder.status}</td>
