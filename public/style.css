@@ -53,14 +53,24 @@ form div {
   height: 400px;
   width: auto;
 }
+.cartPage {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
 
 .large-page-name {
+  display: flex;
   color:rgb(255, 255, 255);
+  align-items: center;
 }
 
 .cart-img {
+  display: flex;
   height: 150px;
   width: auto;
+  justify-content: center;
 }
 
 #logo-img {
@@ -136,5 +146,49 @@ button:hover {
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+#addProduct{
+  margin: 7px;
+}
+#filterCategory {
+  margin: 5px
+}
+.singlePage {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.adminEditDelButtons{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+.adminEditButton{
+  display: flex;
+  justify-content: center;
+  margin-right: 5px;
+}
+.btn-primary {
+  background-color: gray;
+  padding: 10px;
+  margin: 10px
+}
+.commentBox {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
+#bubbleTeaDescription{
+  display: flex;
+  width: 500px;
+  font-size: 20px;
+  text-align: center;
+}
+#submitCommentButton{
+  display: flex;
+  justify-content: flex-end;
+  
 }
 

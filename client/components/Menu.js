@@ -45,7 +45,7 @@ export class Menu extends React.Component {
         <div>
           Filter by Category:
           <select
-            id="category"
+            id="filterCategory"
             value={this.state.teaFilter}
             onChange={this.handleChange}
           >
