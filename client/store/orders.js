@@ -4,10 +4,18 @@ import { getCartInfo } from "./lineItems";
 const GOT_ORDERS = "GOT_ORDERS";
 const GOT_ORDER = "GOT_ORDER";
 const CHECKOUT_ORDER = "CHECKOUT_ORDER";
+const GOT_ALL_ORDERS = "GOT_ORDERS";
 
 const gotOrders = (orders) => {
   return {
     type: GOT_ORDERS,
+    orders,
+  };
+};
+
+const gotAllOrders = (orders) => {
+  return {
+    type: GOT_ALL_ORDERS,
     orders,
   };
 };
@@ -25,6 +33,8 @@ const checkedOut = (order) => {
   };
 };
 
+//this should probably moved to users??
+//api/users/userId/orders
 export const getOrders = (userId) => {
   return async (dispatch) => {
     try {
@@ -41,10 +51,27 @@ export const getOrders = (userId) => {
   };
 };
 
+export const getAllOrders = () => {
+  return async (dispatch) => {
+    try {
+      const token = window.localStorage.getItem("token");
+      const { data } = await axios.get("/api/orders", {
+        headers: {
+          authorization: token,
+        },
+      });
+      dispatch(gotAllOrders(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 export const getOrder = (userId, orderId) => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem("token");
+      //need to revise to get /orders/orderId
       const { data } = await axios.get(`/api/orders/${userId}/${orderId}`, {
         headers: {
           authorization: token,
@@ -87,7 +114,8 @@ export default function ordersReducer(state = [], action) {
       return action.order;
     case GOT_ORDER:
       return action.order;
-
+    case GOT_ALL_ORDERS:
+      return action.orders;
     default:
       return state;
   }

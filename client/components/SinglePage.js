@@ -48,8 +48,6 @@ export class SinglePage extends React.Component {
               <div>Sorry, this product is currently not available</div>
             )}
           </div>
-
-          <div>Comments: </div>
         </main>
       </div>
     );

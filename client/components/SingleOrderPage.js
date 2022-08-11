@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { getOrder } from "../store/orders";
 
-class UserSingleOrderPage extends React.Component {
+class SingleOrderPage extends React.Component {
   componentDidMount() {
     this.props.getOrder(this.props.id, this.props.match.params.id);
   }
@@ -25,6 +25,7 @@ class UserSingleOrderPage extends React.Component {
               <h5>
                 Total Item Price: ${orderItem.quantity * orderItem.itemPrice}
               </h5>
+              <button>Leave Reviews</button>
             </div>
           );
         })}
@@ -41,11 +42,10 @@ class UserSingleOrderPage extends React.Component {
 
 const mapState = (state) => ({
   order: state.orders,
-  id: state.auth.id,
 });
 
 const mapDispatch = (dispatch) => ({
   getOrder: (userId, orderId) => dispatch(getOrder(userId, orderId)),
 });
 
-export default connect(mapState, mapDispatch)(UserSingleOrderPage);
+export default connect(mapState, mapDispatch)(SingleOrderPage);

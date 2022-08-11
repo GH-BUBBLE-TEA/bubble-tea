@@ -11,9 +11,10 @@ import CreateBubbleTea from "./components/CreateBubbleTea";
 import EditBubbleTea from "./components/EditBubbleTea";
 import EditUser from "./components/EditUser";
 import UserOrdersPage from "./components/UserOrdersPage";
-// import CheckOut from "./components/CheckOut.JS";
 import UserSingleOrderPage from "./components/UserSingleOrderPage";
 import Stripe from "./components/Stripe";
+import AllOrdersHistory from "./components/AllOrdersHistory";
+import SingleOrderPage from "./components/SingleOrderPage";
 
 /**
  * COMPONENT
@@ -48,9 +49,19 @@ class Routes extends Component {
 
               <Route exact path="/cart" component={Cart} />
               <Route exact path="/orders" component={UserOrdersPage} />
+              {isAdmin ? (
+                <Route path="/allorders" component={AllOrdersHistory} />
+              ) : (
+                ""
+              )}
               <Route path="/orders/:id" component={UserSingleOrderPage} />
+
+              {isAdmin ? (
+                <Route path="orders/edit/:id" component={SingleOrderPage} />
+              ) : (
+                ""
+              )}
               <Route path="/payment" component={Stripe} />
-              {/* <Route exact path="/checkout" component={CheckOut} /> */}
             </Switch>
           </div>
         ) : (

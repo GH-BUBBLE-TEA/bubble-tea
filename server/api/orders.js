@@ -7,8 +7,18 @@ module.exports = router;
 
 router.get("/", async (req, res, next) => {
   try {
-    const ordersList = await Order.findAll({});
-    res.json(ordersList);
+    const user = await User.findByToken(req.headers.authorization);
+    if (user.isAdmin) {
+      const ordersList = await Order.findAll({
+        include: {
+          model: User,
+          attributes: ["username"],
+        },
+      });
+      res.json(ordersList);
+    } else {
+      console.error("Sorry, user unauthorized!");
+    }
   } catch (e) {
     next(e);
   }
@@ -40,6 +50,33 @@ router.get("/:userId", async (req, res, next) => {
     next(e);
   }
 });
+
+// router.get("/:userId", async (req, res, next) => {
+//   try {
+//     const user = await User.findByToken(req.headers.authorization);
+//     if (user) {
+//       const ordersList = await Order.findAll({
+//         where: {
+//           userId: +req.params.userId,
+//           status: {
+//             [Op.ne]: "Pending",
+//           },
+//         },
+//       });
+//       const result = ordersList.map((order) => {
+//         return {
+//           orderId: order.id,
+//           status: order.status,
+//         };
+//       });
+//       res.json(result);
+//     } else {
+//       console.error("Sorry, user unauthorized!");
+//     }
+//   } catch (e) {
+//     next(e);
+//   }
+// });
 
 router.get("/:userId/:orderId", async (req, res, next) => {
   try {
