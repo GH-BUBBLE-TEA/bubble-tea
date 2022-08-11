@@ -56,7 +56,7 @@ export const getOrder = (userId, orderId) => {
     }
   };
 };
-export const checkout = (orderId, history) => {
+export const checkout = (orderId) => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem("token");
@@ -71,7 +71,6 @@ export const checkout = (orderId, history) => {
       );
       dispatch(checkedOut(data));
       dispatch(getCartInfo());
-      history.push("/cart");
     } catch (err) {
       console.log(err);
     }
