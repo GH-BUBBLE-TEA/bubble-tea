@@ -34,6 +34,33 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+// router.get("/:userId", async (req, res, next) => {
+//   try {
+//     const user = await User.findByToken(req.headers.authorization);
+//     if (user) {
+//       const ordersList = await Order.findAll({
+//         where: {
+//           userId: +req.params.userId,
+//           status: {
+//             [Op.ne]: "Pending",
+//           },
+//         },
+//       });
+//       const result = ordersList.map((order) => {
+//         return {
+//           orderId: order.id,
+//           status: order.status,
+//         };
+//       });
+//       res.json(result);
+//     } else {
+//       console.error("Sorry, user unauthorized!");
+//     }
+//   } catch (e) {
+//     next(e);
+//   }
+// });
+
 router.put("/:id", async (req, res, next) => {
   try {
     const userAuth = await User.findByToken(req.headers.authorization);

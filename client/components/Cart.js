@@ -6,6 +6,7 @@ import { deleteFromCart, updateQuantity } from "../store/lineItems";
 import { Link } from "react-router-dom";
 import { checkout } from "../store/orders";
 import { updateStock } from "../store/bubbleTeas";
+import Stripe from "./Stripe";
 
 export class Cart extends React.Component {
   componentDidMount() {
@@ -13,7 +14,6 @@ export class Cart extends React.Component {
   }
 
   checkout(orderId, cart) {
-    console.log("CART:", cart);
     this.props.checkout(orderId);
     this.props.getCartInfo();
     this.props.updateStock(cart);
@@ -22,8 +22,6 @@ export class Cart extends React.Component {
   render() {
     let finalCost = 0;
     let totalItems = 0;
-    console.log("this.props.cart: ", this.props.cart);
-    console.log("BUBBLE TEA CART: ", this.props.bubbleTea);
     return (
       <div className="cartPage">
         <h1 id="large-page-name">SHOPPING CART:</h1>
@@ -87,6 +85,7 @@ export class Cart extends React.Component {
               })}
             </h2>
             <h3>Total items in the cart: {totalItems} </h3>
+
             <div className="grand-total-cart">
               <h4>Grand Total: ${finalCost}</h4>
             </div>
@@ -99,6 +98,10 @@ export class Cart extends React.Component {
                 Check out
               </button>
             </Link>
+
+            <h4>Grand Total: ${finalCost}</h4>
+            <Stripe total={finalCost} cart={this.props.cart} />
+
           </div>
         ) : (
           <h3>There is no item in the cart.</h3>

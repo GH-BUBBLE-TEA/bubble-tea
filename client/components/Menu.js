@@ -31,7 +31,6 @@ export class Menu extends React.Component {
         return singleBubbleTea;
       }
     });
-    // console.log(process.env.STRIPE_SECRET_KEY);
     return (
       <div>
         {this.props.isAdmin ? (

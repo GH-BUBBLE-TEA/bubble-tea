@@ -29,7 +29,7 @@ export class Home extends React.Component {
             <React.Fragment>
               <div>
                 {" "}
-                Users:
+                <h3>Users:</h3>
                 <table>
                   <thead>
                     <tr>
@@ -69,7 +69,11 @@ export class Home extends React.Component {
                   </tbody>
                 </table>
               </div>
-              <div>Order Lists:</div>
+              <div>
+                <Link to="/allorders">
+                  <h3>Order Lists For All Users</h3>
+                </Link>
+              </div>
             </React.Fragment>
           ) : (
             <React.Fragment>
