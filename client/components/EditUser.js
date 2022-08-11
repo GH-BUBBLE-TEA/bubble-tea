@@ -9,7 +9,7 @@ class EditUser extends Component {
     super();
     this.state = {
       username: "",
-      password: "",
+//      password: "",
       email: "",
     };
 
@@ -29,16 +29,10 @@ class EditUser extends Component {
   }
 
   handleChange(evt) {
-    if (evt.target.password) {
+    evt.preventDefault();
       this.setState({
         [evt.target.name]: evt.target.value,
-      });
-    } else {
-      this.setState({
-        username: evt.target.username,
-        email: evt.target.email,
-      });
-    }
+  });
   }
 
   handleSubmit(evt) {
@@ -47,8 +41,8 @@ class EditUser extends Component {
   }
 
   render() {
-    const { username, email } = this.state;
-    const { handleSubmit, handleChange } = this;
+    let { username, email } = this.state;
+    let { handleSubmit, handleChange } = this;
 
     return (
       <div>
