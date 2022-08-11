@@ -77,7 +77,7 @@ router.post("/", async (req, res, next) => {
         res.status(201).json(newLineItems);
       }
     } else {
-      alert("Sorry! You are unauthorized");
+      console.error("Sorry! You are unauthorized");
     }
   } catch (err) {
     next(err);
@@ -92,7 +92,7 @@ router.delete("/:id", async (req, res, next) => {
       await lineItem.destroy();
       res.send(lineItem);
     } else {
-      alert("Sorry! You are unauthorized");
+      console.error("Sorry! You are unauthorized");
     }
   } catch (error) {
     next(error);
@@ -106,7 +106,7 @@ router.put("/:id", async (req, res, next) => {
       const updatedItem = await LineItem.findByPk(req.params.id);
       res.send(await updatedItem.update(req.body));
     } else {
-      alert("Sorry! You are unauthorized");
+      console.error("Sorry! You are unauthorized");
     }
   } catch (err) {
     next(err);

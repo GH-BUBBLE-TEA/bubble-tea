@@ -9,7 +9,6 @@ class UserOrdersPage extends React.Component {
   }
 
   render() {
-    console.log("this.props.orders", this.props.orders);
     return (
       <React.Fragment>
         <div>

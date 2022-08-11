@@ -34,7 +34,7 @@ router.get("/:userId", async (req, res, next) => {
       });
       res.json(result);
     } else {
-      alert("Sorry, user unauthorized!");
+      console.error("Sorry, user unauthorized!");
     }
   } catch (e) {
     next(e);
@@ -50,7 +50,7 @@ router.get("/:userId/:orderId", async (req, res, next) => {
       });
       res.json(lineItems);
     } else {
-      alert("Sorry, user unauthorized!");
+      console.error("Sorry, user unauthorized!");
     }
   } catch (e) {
     next(e);
@@ -64,7 +64,7 @@ router.put("/:orderId", async (req, res, next) => {
       const order = await Order.findByPk(req.params.orderId);
       res.send(await order.update({ status: "Ordered" }));
     } else {
-      alert("Sorry, user unauthorized!");
+      console.error("Sorry, user unauthorized!");
     }
   } catch (e) {
     next(e);

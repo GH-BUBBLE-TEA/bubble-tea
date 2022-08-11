@@ -8,16 +8,13 @@ import { checkout } from "../store/orders";
 import { updateStock } from "../store/bubbleTeas";
 
 export class Cart extends React.Component {
-  // constructor() {
-  //   super();
-  // }
   componentDidMount() {
     this.props.getCartInfo();
   }
 
   checkout(orderId, cart) {
     console.log("CART:", cart);
-    this.props.checkout(orderId); //thunk
+    this.props.checkout(orderId);
     this.props.getCartInfo();
     this.props.updateStock(cart);
   }
