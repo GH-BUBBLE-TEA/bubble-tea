@@ -86,12 +86,24 @@ export const updateQuantity = (item) => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem("token");
-      const { data } = await axios.put(`/api/lineItems/${item.id}`, item, {
-        headers: {
-          authorization: token,
-        },
-      });
-      dispatch(updatedQuantity(data));
+      if (item.quantity === 0) {
+        dispatch(deleteFromCart(item.id));
+      } else {
+        const { data: bubbleTea } = await axios.get(
+          `/api/bubbleTeas/${item.bubbleTeaId}`
+        );
+        const bubbleTeaStock = bubbleTea.stock;
+        if (item.quantity > bubbleTea.stock) {
+          alert(`Sorry! There is no more ${bubbleTea.teaName} available.`);
+        } else {
+          const { data } = await axios.put(`/api/lineItems/${item.id}`, item, {
+            headers: {
+              authorization: token,
+            },
+          });
+          dispatch(updatedQuantity(data));
+        }
+      }
     } catch (err) {
       console.log(err);
     }
