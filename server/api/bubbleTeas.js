@@ -26,7 +26,7 @@ router.post("/", async (req, res, next) => {
     if (user.isAdmin) {
       res.status(201).json(await BubbleTea.create(req.body));
     } else {
-      alert("Sorry, this is only for administrator user!");
+      console.error("Sorry, this is only for administrator user!");
     }
   } catch (err) {
     next(err);
@@ -40,7 +40,7 @@ router.put("/:id", async (req, res, next) => {
       const bubbleTea = await BubbleTea.findByPk(req.params.id);
       res.send(await bubbleTea.update(req.body));
     } else {
-      alert("Sorry, this is only for administrator user!");
+      console.error("Sorry, this is only for administrator user!");
     }
   } catch (error) {
     next(error);
@@ -64,7 +64,7 @@ router.delete("/:id", async (req, res, next) => {
       await bubbleTea.destroy();
       res.send(bubbleTea);
     } else {
-      alert("Sorry! You are unauthorized");
+      console.error("Sorry! You are unauthorized");
     }
   } catch (error) {
     next(error);
