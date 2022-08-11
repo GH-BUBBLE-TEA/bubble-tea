@@ -54,7 +54,10 @@ class Routes extends Component {
               ) : (
                 ""
               )}
-              <Route path="/orders/:id" component={UserSingleOrderPage} />
+              <Route
+                path="/users/:userId/orders"
+                component={UserSingleOrderPage}
+              />
 
               {isAdmin ? (
                 <Route path="orders/edit/:id" component={SingleOrderPage} />

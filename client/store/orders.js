@@ -1,17 +1,17 @@
 import axios from "axios";
 import { getCartInfo } from "./lineItems";
 
-const GOT_ORDERS = "GOT_ORDERS";
+// const GOT_ORDERS = "GOT_ORDERS";
 const GOT_ORDER = "GOT_ORDER";
 const CHECKOUT_ORDER = "CHECKOUT_ORDER";
 const GOT_ALL_ORDERS = "GOT_ORDERS";
 
-const gotOrders = (orders) => {
-  return {
-    type: GOT_ORDERS,
-    orders,
-  };
-};
+// const gotOrders = (orders) => {
+//   return {
+//     type: GOT_ORDERS,
+//     orders,
+//   };
+// };
 
 const gotAllOrders = (orders) => {
   return {
@@ -35,21 +35,21 @@ const checkedOut = (order) => {
 
 //this should probably moved to users??
 //api/users/userId/orders
-export const getOrders = (userId) => {
-  return async (dispatch) => {
-    try {
-      const token = window.localStorage.getItem("token");
-      const { data } = await axios.get(`/api/orders/${userId}`, {
-        headers: {
-          authorization: token,
-        },
-      });
-      dispatch(gotOrders(data));
-    } catch (err) {
-      console.log(err);
-    }
-  };
-};
+// export const getOrders = (userId) => {
+//   return async (dispatch) => {
+//     try {
+//       const token = window.localStorage.getItem("token");
+//       const { data } = await axios.get(`/api/orders/${userId}`, {
+//         headers: {
+//           authorization: token,
+//         },
+//       });
+//       dispatch(gotOrders(data));
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
+// };
 
 export const getAllOrders = () => {
   return async (dispatch) => {
@@ -67,12 +67,11 @@ export const getAllOrders = () => {
   };
 };
 
-export const getOrder = (userId, orderId) => {
+export const getOrder = (orderId) => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem("token");
-      //need to revise to get /orders/orderId
-      const { data } = await axios.get(`/api/orders/${userId}/${orderId}`, {
+      const { data } = await axios.get(`/api/orders/${orderId}`, {
         headers: {
           authorization: token,
         },
@@ -108,8 +107,8 @@ export const checkout = (orderId) => {
 
 export default function ordersReducer(state = [], action) {
   switch (action.type) {
-    case GOT_ORDERS:
-      return action.orders;
+    // case GOT_ORDERS:
+    //   return action.orders;
     case CHECKOUT_ORDER:
       return action.order;
     case GOT_ORDER:

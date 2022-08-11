@@ -83,7 +83,7 @@ export class Home extends React.Component {
               <Link to={`/home/edit/${this.props.user.id}`}>
                 <button>Edit</button>
               </Link>
-              <Link to="/orders">
+              <Link to={`/users/${this.props.user.id}}/orders`}>
                 <h2>Orders</h2>
               </Link>
             </React.Fragment>

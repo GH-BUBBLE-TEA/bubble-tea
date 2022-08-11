@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { getOrders } from "../store/orders";
+import { getUserOrders } from "../store/singleUser";
 
 class UserOrdersPage extends React.Component {
   componentDidMount() {
-    this.props.getOrders(this.props.id);
+    this.props.getUserOrders(this.props.id);
   }
 
   render() {
@@ -18,7 +18,7 @@ class UserOrdersPage extends React.Component {
           this.props.orders.map((order, index) => {
             return (
               <div key={index}>
-                <Link to={`/orders/${order.orderId}`}>
+                <Link to={`/users/${order.orderId}/orders`}>
                   <h3>Order Number: {order.orderId}</h3>
                 </Link>
                 <p>Status: {order.status}</p>
@@ -35,11 +35,12 @@ class UserOrdersPage extends React.Component {
 
 const mapState = (state) => ({
   orders: state.orders,
+  user: state.user,
   id: state.auth.id,
 });
 
 const mapDispatch = (dispatch, { history }) => ({
-  getOrders: (userId) => dispatch(getOrders(userId)),
+  getUserOrders: (userId) => dispatch(getUserOrders(userId)),
 });
 
 export default connect(mapState, mapDispatch)(UserOrdersPage);

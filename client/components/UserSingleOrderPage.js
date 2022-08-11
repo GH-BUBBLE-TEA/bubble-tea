@@ -5,7 +5,7 @@ import { getOrder } from "../store/orders";
 
 class UserSingleOrderPage extends React.Component {
   componentDidMount() {
-    this.props.getOrder(this.props.id, this.props.match.params.id);
+    this.props.getOrder(this.props.match.params.id);
   }
 
   render() {
@@ -45,7 +45,7 @@ const mapState = (state) => ({
 });
 
 const mapDispatch = (dispatch) => ({
-  getOrder: (userId, orderId) => dispatch(getOrder(userId, orderId)),
+  getOrder: (orderId) => dispatch(getOrder(orderId)),
 });
 
 export default connect(mapState, mapDispatch)(UserSingleOrderPage);
