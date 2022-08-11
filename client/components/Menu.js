@@ -71,13 +71,13 @@ export class Menu extends React.Component {
         <div className="bubble-tea-list">
           {allbubbleTeas.map((bubbleTea) => {
             return (
-              <div key={bubbleTea.id}>
+              <div key={bubbleTea.id} className="product-info">
                 <div>
                   <Link to={`/menu/${bubbleTea.id}`}>
                     <img className="menu-image" src={bubbleTea.imageURL} />
-                    <h3>{bubbleTea.teaName}</h3>
+                    <h3 className="teaName">{bubbleTea.teaName}</h3>
                   </Link>
-                  <p>Price: ${bubbleTea.defaultPrice}</p>
+                  <p>${bubbleTea.defaultPrice}</p>
                 </div>
               </div>
             );

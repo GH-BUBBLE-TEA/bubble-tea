@@ -57,7 +57,7 @@ form div {
 }
 
 .cart-img {
-  height: 80px;
+  height: 150px;
   width: auto;
 }
 
@@ -80,4 +80,26 @@ button {
 button:hover {
   background-color: rgb(130, 130, 130);
   transition: .7s;
+}
+
+.bubble-tea-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  padding: 40px;
+  justify-content: space-evenly;
+}
+
+.teaName {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  font-size: 14px;
+  padding: 10px;
+  justify-content: space-evenly;
+  border-style: dotted;
+}
+
+.product-info {
+  justify-content: space-around;
 }
