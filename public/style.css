@@ -82,13 +82,23 @@ button:hover {
   transition: .7s;
 }
 
+
+.product-info {
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  padding: 10px;
+  align-items: center;
+}
+
 .bubble-tea-list {
   display: flex;
   flex-wrap: wrap;
-  align-content: center;
+  align-content: space-around;
   padding: 40px;
   justify-content: space-evenly;
 }
+
 
 .teaName {
   display: flex;
@@ -100,6 +110,12 @@ button:hover {
   border-style: dotted;
 }
 
-.product-info {
-  justify-content: space-around;
+.price {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-content: center;
 }
+
+
+
