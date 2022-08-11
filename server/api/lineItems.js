@@ -1,37 +1,33 @@
 const router = require("express").Router();
+const { addListener } = require("nodemon");
 const {
-  models: { LineItems, BubbleTea, User, Order },
+  models: { LineItem, BubbleTea, User, Order },
 } = require("../db");
 module.exports = router;
 
 router.get("/", async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
-    console.log("user: ", user);
     const order = await Order.findOne({
       where: {
         userId: user.id,
         status: "Pending",
       },
     });
-    if (!order) {
-      res.send("there is no item in the cart");
-    } else {
-      console.log("orderId: ", order.id);
-      const lineItems = await LineItems.findAll({
+    if (order) {
+      const lineItems = await LineItem.findAll({
         where: {
           orderId: order.id,
         },
       });
-      console.log("cart:", lineItems);
       res.status(200).send(lineItems);
     }
   } catch (err) {
     next(err);
   }
 });
+
 router.post("/", async (req, res, next) => {
-  console.log("req.body: ", req.body);
   try {
     const bubbleTea = req.body;
     const user = await User.findByToken(req.headers.authorization);
@@ -41,42 +37,87 @@ router.post("/", async (req, res, next) => {
         status: "Pending",
       },
     });
+    if (user) {
+      if (order) {
+        const duplicate = await LineItem.findOne({
+          where: {
+            orderId: order.id,
+            bubbleTeaId: bubbleTea.id,
+          },
+        });
 
-    if (order) {
-      const duplicate = await LineItems.findOne({
-        where: {
-          orderId: order.id,
-          bubbleTeaId: bubbleTea.id,
-        },
-      });
-
-      if (duplicate) {
-        duplicate.quantity++;
-        await duplicate.save();
-        res.status(201).json(duplicate);
+        if (duplicate) {
+          duplicate.quantity++;
+          await duplicate.save();
+          res.status(201).json(duplicate);
+        } else {
+          const newLineItems = await LineItem.create({
+            orderId: order.id,
+            bubbleTeaId: bubbleTea.id,
+            itemPrice: bubbleTea.defaultPrice,
+            quantity: 1,
+            teaName: bubbleTea.teaName,
+            imageURL: bubbleTea.imageURL,
+          });
+          res.status(201).json(newLineItems);
+        }
       } else {
-        const newLineItems = await LineItems.create({
-          orderId: order.id,
+        const newOrder = await Order.create({
+          userId: user.id,
+        });
+
+        const newLineItems = await LineItem.create({
+          orderId: newOrder.id,
           bubbleTeaId: bubbleTea.id,
           itemPrice: bubbleTea.defaultPrice,
           quantity: 1,
-          //totalPrice: itemPrice * quantity,
+          teaName: bubbleTea.teaName,
+          imageURL: bubbleTea.imageURL,
         });
         res.status(201).json(newLineItems);
       }
     } else {
-      const newOrder = await Order.create({
-        userId: user.id,
-      });
-      const newLineItems = await LineItems.create({
-        orderId: newOrder.id,
-        bubbleTeaId: bubbleTea.id,
-        itemPrice: bubbleTea.defaultPrice,
-        quantity: 1,
-        //totalPrice: itemPrice * quantity,
-      });
-      res.status(201).json(newLineItems);
+      console.error("Sorry! You are unauthorized");
     }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const user = await User.findByToken(req.headers.authorization);
+    if (user) {
+      const lineItem = await LineItem.findByPk(req.params.id);
+      await lineItem.destroy();
+      res.send(lineItem);
+    } else {
+      console.error("Sorry! You are unauthorized");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/:id", async (req, res, next) => {
+  try {
+    const user = await User.findByToken(req.headers.authorization);
+    if (user) {
+      const updatedItem = await LineItem.findByPk(req.params.id);
+      res.send(await updatedItem.update(req.body));
+    } else {
+      console.error("Sorry! You are unauthorized");
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+//?
+router.get("/:id", async (req, res, next) => {
+  try {
+    const lineItem = await LineItem.findByPk(req.params.id);
+    res.status(200).send(lineItem);
   } catch (err) {
     next(err);
   }

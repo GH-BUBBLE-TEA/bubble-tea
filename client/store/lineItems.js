@@ -2,6 +2,8 @@ import axios from "axios";
 
 const GOT_CART = "GOT_CART";
 const ADD_CART = "ADD_CART";
+const DELETE_ITEM = "DELETE_ITEM";
+const UPDATE_QUANTITY = "UPDATE_QUANTITY";
 
 const gotCartInfo = (items) => {
   return {
@@ -13,6 +15,20 @@ const gotCartInfo = (items) => {
 const addedToCart = (item) => {
   return {
     type: ADD_CART,
+    item,
+  };
+};
+
+const deletedFromCart = (item) => {
+  return {
+    type: DELETE_ITEM,
+    item,
+  };
+};
+
+const updatedQuantity = (item) => {
+  return {
+    type: UPDATE_QUANTITY,
     item,
   };
 };
@@ -35,7 +51,6 @@ export const getCartInfo = () => {
 
 export const addToCart = (bubbleTea) => {
   return async (dispatch) => {
-    console.log("bubbleTea in thunk: ", bubbleTea);
     try {
       const token = window.localStorage.getItem("token");
       const { data } = await axios.post("/api/lineItems", bubbleTea, {
@@ -44,6 +59,51 @@ export const addToCart = (bubbleTea) => {
         },
       });
       dispatch(addedToCart(data));
+      alert("Added to cart successfully");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const deleteFromCart = (id) => {
+  return async (dispatch) => {
+    try {
+      const token = window.localStorage.getItem("token");
+      const { data: lineItem } = await axios.delete(`/api/lineItems/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
+      dispatch(deletedFromCart(lineItem));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const updateQuantity = (item) => {
+  return async (dispatch) => {
+    try {
+      const token = window.localStorage.getItem("token");
+      if (item.quantity === 0) {
+        dispatch(deleteFromCart(item.id));
+      } else {
+        const { data: bubbleTea } = await axios.get(
+          `/api/bubbleTeas/${item.bubbleTeaId}`
+        );
+        const bubbleTeaStock = bubbleTea.stock;
+        if (item.quantity > bubbleTea.stock) {
+          alert(`Sorry! There is no more ${bubbleTea.teaName} available.`);
+        } else {
+          const { data } = await axios.put(`/api/lineItems/${item.id}`, item, {
+            headers: {
+              authorization: token,
+            },
+          });
+          dispatch(updatedQuantity(data));
+        }
+      }
     } catch (err) {
       console.log(err);
     }
@@ -56,6 +116,16 @@ export default function cartReducer(state = [], action) {
       return action.items;
     case ADD_CART:
       return [...state, action.item];
+    case DELETE_ITEM:
+      return state.filter(
+        (item) => item.bubbleTeaId !== action.item.bubbleTeaId
+      );
+    case UPDATE_QUANTITY:
+      return state.map((item) =>
+        item.bubbleTeaId === action.item.bubbleTeaId
+          ? { ...item, quantity: action.item.quantity }
+          : item
+      );
     default:
       return state;
   }

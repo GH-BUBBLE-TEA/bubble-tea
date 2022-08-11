@@ -2,7 +2,9 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-
+const {
+  models: { LineItem, BubbleTea, Order },
+} = require("../db");
 const SALT_ROUNDS = 5;
 
 const User = db.define("user", {
@@ -13,6 +15,15 @@ const User = db.define("user", {
   },
   password: {
     type: Sequelize.STRING,
+  },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
+  email: {
+    type: Sequelize.STRING,
+    validate: { isEmail: true },
+    unique: true,
   },
 });
 
@@ -71,3 +82,40 @@ const hashPassword = async (user) => {
 User.beforeCreate(hashPassword);
 User.beforeUpdate(hashPassword);
 User.beforeBulkCreate((users) => Promise.all(users.map(hashPassword)));
+
+// User.getOrders = async function () {
+//   console.log("getOrders: ", new this());
+//   const orders = await Order.findAll({
+//     where: {
+//       userId: this.id,
+//       status: "Pending",
+//     },
+//   });
+//   if (!orders) {
+//     return "You have not ordered anything yet! Start shopping!";
+//   } else {
+//     // const lineItem = await LineItem.findAll({
+//     //   where: {
+//     //     orderId: order.id,
+//     //   },
+//     //   // include: [
+//     //   //   {
+//     //   //     model: BubbleTea,
+//     //   //   },
+//     //   // ],
+//     // });
+
+//     const orderWithItems = orders.forEach((order) => {
+//       return LineItem.findAll({ where: { orderId: order.id } });
+//       //   // include: [{ model: LineItem, include: [BubbleTea] }],
+//     });
+
+//     // const orderWithItems = orders.forEach((order) => {
+//     //   return Order.findByPk(order.id, {
+//     //     include: [{ model: LineItem, include: [BubbleTea] }],
+//     //   });
+//     // });
+//     console.log("pending orders: ", orderWithItems);
+//     return orderWithItems;
+//   }
+// };

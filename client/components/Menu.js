@@ -10,10 +10,8 @@ export class Menu extends React.Component {
       teaFilter: "All",
     };
     this.handleChange = this.handleChange.bind(this);
-    console.log("menu props:", this.props);
   }
   componentDidMount() {
-    console.log("component");
     this.props.fetchData();
   }
 
@@ -33,11 +31,21 @@ export class Menu extends React.Component {
         return singleBubbleTea;
       }
     });
+    // console.log(process.env.STRIPE_SECRET_KEY);
     return (
       <div>
+        {this.props.isAdmin ? (
+          <Link to="/menu/create">
+            <button id="addProduct">Add a new product</button>
+          </Link>
+        ) : (
+          ""
+        )}
+
         <div>
+          Filter by Category:
           <select
-            id="category"
+            id="filterCategory"
             value={this.state.teaFilter}
             onChange={this.handleChange}
           >
@@ -51,13 +59,13 @@ export class Menu extends React.Component {
         <div className="bubble-tea-list">
           {allbubbleTeas.map((bubbleTea) => {
             return (
-              <div key={bubbleTea.id}>
+              <div key={bubbleTea.id} className="product-info">
                 <div>
-                  <Link to={`/menu/${bubbleTea.id}`}>
-                    <img src={bubbleTea.imageURL} />
-                    <h3>{bubbleTea.teaName}</h3>
+                  <Link className="bubble-tea1" to={`/menu/${bubbleTea.id}`}>
+                    <img className="menu-image" src={bubbleTea.imageURL} />
+                    <h3 className="teaName">{bubbleTea.teaName}</h3>
                   </Link>
-                  <p>Price: ${bubbleTea.defaultPrice}</p>
+                  <p className="price">${bubbleTea.defaultPrice}</p>
                 </div>
               </div>
             );
@@ -71,6 +79,7 @@ export class Menu extends React.Component {
 const mapStateToProps = (state) => {
   return {
     bubbleTeas: state.bubbleTeas,
+    isAdmin: !!state.auth.isAdmin,
   };
 };
 
