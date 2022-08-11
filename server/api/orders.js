@@ -7,8 +7,23 @@ module.exports = router;
 
 router.get("/", async (req, res, next) => {
   try {
-    const ordersList = await Order.findAll({});
-    res.json(ordersList);
+    const user = await User.findByToken(req.headers.authorization);
+    if (user.isAdmin) {
+      const ordersList = await Order.findAll({
+        where: {
+          status: {
+            [Op.ne]: "Pending",
+          },
+        },
+        include: {
+          model: User,
+          attributes: ["username"],
+        },
+      });
+      res.json(ordersList);
+    } else {
+      console.error("Sorry, user unauthorized!");
+    }
   } catch (e) {
     next(e);
   }
