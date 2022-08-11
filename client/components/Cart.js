@@ -25,7 +25,7 @@ export class Cart extends React.Component {
     console.log("this.props.cart: ", this.props.cart);
     console.log("BUBBLE TEA CART: ", this.props.bubbleTea);
     return (
-      <div>
+      <div className="cartPage">
         <h1 className="large-page-name">SHOPPING CART:</h1>
         {this.props.cart ? (
           <div>

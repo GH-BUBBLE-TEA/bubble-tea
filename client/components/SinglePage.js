@@ -15,17 +15,21 @@ export class SinglePage extends React.Component {
     const bubbleTea = this.props.bubbleTea;
     return (
       <div>
-        <main>
+        <div></div>
+        <main className="singlePage">
           <h2 className="large-page-name">{bubbleTea.teaName}</h2>
           {this.props.isAdmin ? (
             <div>
-              <Link to={`/menu/edit/${bubbleTea.id}`}>
-                <button>Edit</button>
-              </Link>
-              <button onClick={() => this.props.deleteBubbleTea(bubbleTea.id)}>
-                Delete
-              </button>
-              <p>Stock Level: {bubbleTea.stock}</p>
+              <div className="adminEditDelButtons">
+                <Link to={`/menu/edit/${bubbleTea.id}`}>
+                  <button className="adminEditButton">Edit</button>
+                </Link>
+                <button
+                  onClick={() => this.props.deleteBubbleTea(bubbleTea.id)}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           ) : (
             ""
@@ -33,13 +37,16 @@ export class SinglePage extends React.Component {
 
           <img className="single-image" src={bubbleTea.imageURL} />
           <h3>${bubbleTea.defaultPrice}</h3>
-          <h4>{bubbleTea.description}</h4>
+          <h4 id="bubbleTeaDescription">{bubbleTea.description}</h4>
           <div>
             {bubbleTea.stock > 0 ? (
               <div>
                 Available stock: {bubbleTea.stock}
                 <div>
-                  <button onClick={() => this.props.addToCart(bubbleTea)}>
+                  <button
+                    className="btn-primary"
+                    onClick={() => this.props.addToCart(bubbleTea)}
+                  >
                     Add to Cart
                   </button>
                 </div>
