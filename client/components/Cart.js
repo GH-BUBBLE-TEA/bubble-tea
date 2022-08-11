@@ -77,15 +77,15 @@ export class Cart extends React.Component {
             </h2>
             <h3>Total items in the cart: {totalItems} </h3>
             <h4>Grand Total: ${finalCost}</h4>
-            {/* <Link to="/checkout"> */}
-            <button
-              onClick={() =>
-                this.checkout(this.props.cart[0].orderId, this.props.cart)
-              }
-            >
-              Check out
-            </button>
-            {/* </Link> */}
+            <Link to="/payment">
+              <button
+                onClick={() =>
+                  this.checkout(this.props.cart[0].orderId, this.props.cart)
+                }
+              >
+                Check out
+              </button>
+            </Link>
           </div>
         ) : (
           <h3>There is no item in the cart.</h3>
