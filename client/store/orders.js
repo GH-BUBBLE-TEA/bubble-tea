@@ -83,13 +83,13 @@ export const getOrder = (userId, orderId) => {
     }
   };
 };
-export const checkout = (orderId) => {
+export const checkout = (stripeId) => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem("token");
-      const { data } = await axios.put(
-        `/api/orders/${orderId}`,
-        { status: "Ordered" },
+      const { data } = await axios.post(
+        `/api/checkout`,
+        { stripeId },
         {
           headers: {
             authorization: token,

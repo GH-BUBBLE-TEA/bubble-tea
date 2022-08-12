@@ -5,15 +5,6 @@ const app = express();
 // require("dotenv").config();
 module.exports = app;
 
-// const cors = require("cors");
-// const stripe = require("stripe")(
-//   "sk_test_51LTS7NIwzaRDf6W3gBKQBojbpdkrb6OKtfedfVomiGGmJ0FTinkuOxboUTaCNQFgzZGtmRPiC5TSMl1KfSIqTUnT00RHLjMYmJ"
-// );
-// const uuid = require("uuid").v4;
-// const bodyparser = require("body-parser");
-
-console.log("process.env.STRIPE_SECRET_KEY", process.env.STRIPE_SECRET_KEY);
-
 // logging middleware
 app.use(morgan("dev"));
 
@@ -21,8 +12,6 @@ app.use(morgan("dev"));
 // app.use(bodyparser.urlencoded({ extended: false }));
 // app.use(bodyparser.json());
 app.use(express.json());
-
-// app.use(cors());
 
 // auth and api routes
 app.use("/auth", require("./auth"));
