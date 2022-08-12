@@ -90,7 +90,6 @@ export class Cart extends React.Component {
               <h4>Grand Total: ${finalCost}</h4>
             </div>
 
-            <h4>Grand Total: ${finalCost}</h4>
             <Stripe total={finalCost} cart={this.props.cart} />
           </div>
         ) : (
