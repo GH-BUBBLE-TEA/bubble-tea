@@ -7,7 +7,8 @@ import { updateStock } from "../store/bubbleTeas";
 
 const Stripe = (props) => {
   const handleToken = (token, addresses) => {
-    props.checkout(props.cart[0].orderId, props.cart);
+    console.log(token);
+    props.checkout(token.id);
   };
 
   return (
