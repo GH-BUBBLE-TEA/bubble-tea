@@ -89,19 +89,9 @@ export class Cart extends React.Component {
             <div className="grand-total-cart">
               <h4>Grand Total: ${finalCost}</h4>
             </div>
-            <Link to="/payment">
-              <button
-                onClick={() =>
-                  this.checkout(this.props.cart[0].orderId, this.props.cart)
-                }
-              >
-                Check out
-              </button>
-            </Link>
 
             <h4>Grand Total: ${finalCost}</h4>
             <Stripe total={finalCost} cart={this.props.cart} />
-
           </div>
         ) : (
           <h3>There is no item in the cart.</h3>
